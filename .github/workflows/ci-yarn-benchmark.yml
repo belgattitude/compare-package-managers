@@ -52,7 +52,7 @@ jobs:
       - name: ⚙ Install pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7.14.0
+          version: 7.14.1
 
       - name: ⚙ Expose pnpm config(s) through "$GITHUB_OUTPUT"
         id: pnpm-config
@@ -113,8 +113,8 @@ jobs:
       #    HUSKY: '0'
       #    PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf "**/node_modules"
+      # - name: 🧹 Remove node_modules
+      #   run: npx -y rimraf "**/node_modules"
 
       - name: 📥 Yarn install no-cache
         run: yarn install --immutable --inline-builds

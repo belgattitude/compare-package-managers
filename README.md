@@ -31,7 +31,7 @@ Pnpm is a fast moving package manager recently endorsed by vercel that plays wel
     See [pnpm cache gist](https://gist.github.com/belgattitude/838b2eba30c324f1f0033a797bab2e31) and [yarn cache gist](https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a),
     that gives a 2x boost (and decrease co2 footprint)    
   - Apart from yarn pnp that will be a clear winner, PNPM wins all the time. But be aware that the difference is not that big when you
-    put add the cache.  
+    handle the cache on the CI.  
     
 - Space efficient ? 
   - PNPM claims seems to be based on a scenario in which many versions of the same library co-exists (ie: lodash...). On the example I used, yarn with

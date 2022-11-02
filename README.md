@@ -45,6 +45,12 @@ The foll
 
 > Data: 
 
+| CI Scenario             | Install | @action/cache |   Setup | Total        | Projection    | Save/mo    | Save/mo |
+|-------------------------|--------:|--------------:|--------:|-------------:|-----------------:|-------------------:|-----------------:|
+| yarn4 mixed-compression |    ±69s |               |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
+| yarn4 no compression    |    ±39s |    *no-cache* |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
+| pnpm7                   |    ±59s |    *no-cache* |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
+
 
 ### CI: Without cache
 
@@ -52,7 +58,7 @@ The foll
 
 | CI Scenario              | Install | Setup | 
 |--------------------------|--------:|------:|
-| yarn4 mixed-compression  |   ±132s |    0s |
+| yarn4 mixed-compression  |   ±120s |    0s |
 | yarn4 no compression     |    ±63s |    0s |
 | pnpm7                    |    ±67s |    1s | 
 
@@ -75,18 +81,6 @@ When already compressed the yarn cache is stored faster in the github cache. Mak
 try to compress something already compressed. On the pnpm side saving the pnpm-store is much slower, this is due
 to different deduplication but also to the fact that it has to compress more files (+symlinks...). Note also
 that regarding cache yarn has an advantage: it does not need to be recreated for different os/architectures. 
-
-
-
-| CI Scenario            | Install | @action/cache |   Setup | Total        | Projection    | Save/mo    | Save/mo |
-|------------------------|--------:|--------------:|--------:|-------------:|-----------------:|-------------------:|-----------------:|
-| yarn4 no-cache-mixed   |   ±132s |    *no-cache* |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
-| yarn4 no-cache-no-comp |    ±63s |    *no-cache* |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
-
-| yarn4 cache-mixed        |    ±42s |                    2s (190MB)   |      0s  | ±44s      | ±4.8h/mo  | *reference*       | ♻️ - 7.5h |  
-| yarn4 cache-no-comp      |    ±32s |                   4s (160MB)   |       0s | ±36s       | ±4h/mo | ♻️ - 0.9h    | ♻️ - 8.5h |
-| pnpm7 cache              |    ±17s |                   8s (245MB)   |       2s | ±27s       | ±3h/mo  | ♻️ -1.8h | ♻️ - 9.5h |
-| pnpm7 no-cache           |    ±61s |                  *no-cache*  |       2s | ±61s       | ±6.6h/mo  |  | |
 
 
 ## Sponsors :heart:

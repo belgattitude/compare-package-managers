@@ -16,7 +16,7 @@ Yarn support 3 module resolution algorithms (often called hoisting): node_module
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 
 Keep in mind that the pnp linker will be the fastest in install and will even bring speedups at runtime.
 
-Pnpm is a fast moving package manager recently endorsed by vercel. 
+Pnpm is a fast moving package manager recently endorsed by vercel that plays well in monorepos. 
 
 ### TLDR;
 
@@ -39,17 +39,26 @@ Pnpm is a fast moving package manager recently endorsed by vercel.
 
 ### Scenarios
 
-The foll
+The following have been tested on CI. Look for the results in the action history:
+
+- https://github.com/belgattitude/compare-package-managers/actions
+
+The action is https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-yarn-benchmark.yml
 
 ### CI: With cache
 
 > Data: 
 
-| CI Scenario             | Install | @action/cache |   Setup | Total        | Projection    | Save/mo    | Save/mo |
-|-------------------------|--------:|--------------:|--------:|-------------:|-----------------:|-------------------:|-----------------:|
-| yarn4 mixed-compression |    ±69s |               |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
-| yarn4 no compression    |    ±39s |    *no-cache* |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
-| pnpm7                   |    ±59s |    *no-cache* |      0s | ±113s      | ±12.5h/mo |                        | *reference*    |
+| CI Scenario             | Install | CI load cache | CI persist cache |  Setup | 
+|-------------------------|--------:|--------------:|-----------------:|-------:|
+| yarn4 mixed-compression |    ±69s |           ±3s |          *(±6s)* |     0s |
+| yarn4 no compression    |    ±39s |           ±4s |          *(±9s)* |     0s |
+| pnpm7                   |    ±16s |           ±8s |         *(±16s)* |     1s |
+
+With cache pnpm is the clear winner: 24s vs yarn no-compress: 43s. But it's important to mention that 
+yarn built-in cache feature allows to almost always start with warm cache (even in case of lock changes).
+For example with pnpm when there's a lock change, the 24s becomes 67s + 9s (load cache) +16s (persist cache)
+which depending on situations makes yarn wins.
 
 
 ### CI: Without cache
@@ -67,20 +76,30 @@ the js zip compression brings an overhead on single-core cpu's. Pnpm results are
 not dedupe as *well* (?) it actually downloads more packages (multiple typescript versions...). Difficult
 comparison. 
 
-### CI: Saving cache
+### CI: action/cache
 
-> Data: https://github.com/belgattitude/compare-package-managers/actions/runs/3346115309/jobs/5542514593
+> First run data: https://github.com/belgattitude/compare-package-managers/actions/runs/3346115309/jobs/5542514593
 
-| CI Scenario              | Install |   Size | 
-|--------------------------|--------:|-------:|
-| yarn4 mixed-compression  |     ±6s |  203MB |
-| yarn4 no compression     |     ±9s |  169MB |
-| pnpm7                    |    ±16s |  266MB |
+| CI Scenario              | Retrieve cache | Persist cache |   Size | 
+|--------------------------|---------------:|--------------:|-------:|
+| yarn4 mixed-compression  |            ±3s |           ±6s |  203MB |
+| yarn4 no compression     |            ±4s |           ±9s |  169MB |
+| pnpm7                    |            ±8s |          ±16s |  266MB |
 
 When already compressed the yarn cache is stored faster in the github cache. Make sense as action/cache won't 
 try to compress something already compressed. On the pnpm side saving the pnpm-store is much slower, this is due
 to different deduplication but also to the fact that it has to compress more files (+symlinks...). Note also
 that regarding cache yarn has an advantage: it does not need to be recreated for different os/architectures. 
+
+<details>
+  <summary>Give me a screenshot of cache retrieval</summary>
+  <img src="https://user-images.githubusercontent.com/259798/199530263-c443171b-0d47-4937-ab4b-a0382d4200f2.png" /> 
+</details>
+
+<details>
+  <summary>Give me a screenshot of cache restoration</summary>
+  <img src="https://user-images.githubusercontent.com/259798/199531335-34584af8-366e-477d-bc50-8016c734ad48.png" /> 
+</details>
 
 
 ## Sponsors :heart:

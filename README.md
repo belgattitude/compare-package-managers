@@ -52,15 +52,18 @@ The action is https://github.com/belgattitude/compare-package-managers/blob/main
 
 | CI Scenario             | Install | CI load cache | CI persist cache |  Setup | 
 |-------------------------|--------:|--------------:|-----------------:|-------:|
-| yarn4 mixed-compression |    ±69s |           ±3s |          *(±6s)* |     0s |
-| yarn4 no compression    |    ±39s |           ±4s |          *(±9s)* |     0s |
-| pnpm7                   |    ±16s |           ±8s |         *(±16s)* |     1s |
+| yarn4 mixed-compression |    ±41s |           ±3s |          *(±6s)* |     0s |
+| yarn4 no compression    |    ±33s |           ±4s |          *(±9s)* |     0s |
+| pnpm7                   |    ±17s |           ±9s |         *(±16s)* |     1s |
 
-With cache pnpm is the clear winner: 24s vs yarn no-compress: 43s. But it's important to mention that 
+With cache pnpm is the fastest: 27s vs yarn no-compress: 37s. But it's important to mention that 
 yarn built-in cache feature allows to almost always start with warm cache (even in case of lock changes).
 For example with pnpm when there's a lock change, the 24s becomes 67s + 9s (load cache) +16s (persist cache)
-which depending on situations makes yarn wins.
+which depending on situations makes yarn wins (63s + 4s + 9s).
 
+Both package managers seems fast though.
+
+<img src="https://user-images.githubusercontent.com/259798/199542234-f828450c-e8e4-4e61-b391-cc022adaa3eb.png" />
 
 ### CI: Without cache
 

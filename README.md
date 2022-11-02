@@ -4,6 +4,7 @@ There's few official benchmarks provided by [pnpm](https://pnpm.io/benchmarks) a
 Was curious how they compare to a real-world scenario based off [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example).
 Install is the most common operation in ci, local, docker... potential for co2 emissions reductions (?)
 
+
 ### Technicalities
 
 - [Yarn 4.0.0-rc.27](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
@@ -18,7 +19,7 @@ Keep in mind that the pnp linker will be the fastest in install and will even br
 
 Pnpm is a fast moving package manager recently endorsed by vercel that plays well in monorepos. 
 
-### TLDR;
+### Aspects
 
 - Reproducible ? 
   - Yarn lightweight js binary is committed within the repo (<3mb). That avoid bugs due to

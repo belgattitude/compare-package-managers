@@ -13,7 +13,7 @@ export const HomePage: FC = () => {
     <>
       <NextSeo
         title={t('home:page.title')}
-        description="See https://github.com/belgattitude/compare-package-managers"
+        description="See https://github.com/belgattitude/nextjs-monorepo-example"
       />
       <MainLayout>
         <Banner />

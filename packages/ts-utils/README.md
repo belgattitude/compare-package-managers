@@ -1,7 +1,7 @@
 # @your-org/ts-utils
 
 > **Note**
-> This package is part of [belgattitude/compare-package-managers](https://github.com/belgattitude/compare-package-managers).
+> This package is part of [belgattitude/nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example).
 
 A package holding some basic typescript utilities: typeguards, assertions...
 

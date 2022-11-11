@@ -1,5 +1,5 @@
 # Bench yarn with compression vs without + action/cache
-name: 'Yarn benchmark'
+name: 'Install benchmarks'
 on: [push]
 jobs:
   bench:
@@ -52,7 +52,7 @@ jobs:
       - name: ⚙ Install pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7.14.2
+          version: 7.15.0
 
       - name: ⚙ Expose pnpm config(s) through "$GITHUB_OUTPUT"
         id: pnpm-config

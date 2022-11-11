@@ -2,7 +2,7 @@
 
 There's few official benchmarks provided by [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) about their speed. 
 Was curious how they compare to a real-world scenario based off [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example).
-Install is the most common operation in ci, local, docker... potential for co2 emissions reductions (?)
+Install is the most common operation in ci, local, docker... potential for co2 emissions reductions (:tree: ?)
 
 
 ### Technicalities
@@ -44,7 +44,7 @@ The following have been tested on CI. Look for the results in the action history
 
 - https://github.com/belgattitude/compare-package-managers/actions
 
-The action is https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-yarn-benchmark.yml
+Latest action is available in [.github/workflows/ci-install-benchmark.yml]()
 
 ### CI: With cache
 

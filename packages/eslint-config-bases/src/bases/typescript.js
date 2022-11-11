@@ -1,6 +1,6 @@
 /**
  * Custom config base for projects using typescript / javascript.
- * @see https://github.com/belgattitude/compare-package-managers/tree/main/packages/eslint-config-bases
+ * @see https://github.com/belgattitude/nextjs-monorepo-example/tree/main/packages/eslint-config-bases
  */
 
 module.exports = {

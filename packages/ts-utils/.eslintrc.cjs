@@ -1,6 +1,6 @@
 /**
  * Specific eslint rules for this workspace, learn how to compose
- * @link https://github.com/belgattitude/compare-package-managers/tree/main/packages/eslint-config-bases
+ * @link https://github.com/belgattitude/nextjs-monorepo-example/tree/main/packages/eslint-config-bases
  */
 
 const {

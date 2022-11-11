@@ -1,0 +1,47 @@
+name: 'Build benchmarks'
+on: [push]
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    env:
+      YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📥 YARN Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: YARN Nextjs build
+        working-directory: ${{ github.workspace }}/apps/nextjs-app
+        run: yarn build
+
+      - name: YARN Debug browser size
+        working-directory: ${{ github.workspace }}/apps/nextjs-app
+        run: yarn check-size
+
+      - name: 🧹 Reset install and builds
+        run: |
+          npx -y rimraf "**/node_modules"
+          npx -y rimraf "**/.next"
+          npx -y rimraf "**/.cache"
+
+      - name: 📥 PNPM Monorepo install
+        uses: ./.github/actions/pnpm-install
+
+      - name: PNPM Nextjs build
+        working-directory: ${{ github.workspace }}/apps/nextjs-app
+        run: pnpm build
+
+      - name: PNPM Debug browser size
+        working-directory: ${{ github.workspace }}/apps/nextjs-app
+        run: pnpm run check-size
+

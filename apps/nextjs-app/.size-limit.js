@@ -15,7 +15,7 @@ const limitCfg = {
   defaultSize: '85kb',
   pages: {
     '/': '120kb',
-    '/404': '80kb',
+    '/404': '85kb',
     '/_app': '155kb',
     '/_error': '90kb',
     '/_monitor/sentry/csr-page': '85kb',
@@ -44,4 +44,15 @@ module.exports = [
     path: ['.next/static/css/**/*.css'],
     limit: '10 kB',
   },
+  {
+    name: 'Standalone (gzip)',
+    path: ['.next/standalone/**/*'],
+    limit: '26MB'
+  },
+  {
+    name: 'Standalone (uncompressed)',
+    path: ['.next/standalone/**/*'],
+    limit: '76MB',
+    gzip: false
+  }
 ];

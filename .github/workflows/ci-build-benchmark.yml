@@ -6,6 +6,9 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
+    env:
+      YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
+
     steps:
       - uses: actions/checkout@v3
 

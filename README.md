@@ -44,7 +44,7 @@ The following have been tested on CI. Look for the results in the action history
 
 - https://github.com/belgattitude/compare-package-managers/actions
 
-The action is https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-yarn-benchmark.yml
+Latest action is available in [.github/workflows/ci-install-benchmark.yml]()
 
 ### CI: With cache
 

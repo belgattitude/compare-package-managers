@@ -28,10 +28,6 @@ jobs:
         working-directory: ${{ github.workspace }}/apps/nextjs-app
         run: yarn check-size
 
-      - name: YARN Debug browser size
-        working-directory: ${{ github.workspace }}/apps/nextjs-app
-        run: yarn check-size
-
       - name: 🧹 Reset install and builds
         run: |
           npx -y rimraf "**/node_modules"

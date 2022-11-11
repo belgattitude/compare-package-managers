@@ -16,7 +16,7 @@ export const DemoPage: FC = () => {
     <>
       <NextSeo
         title={t('demo:page.title')}
-        description="Web-app nextjs monorepo example, https://github.com/belgattitude/compare-package-managers"
+        description="Web-app nextjs monorepo example, https://github.com/belgattitude/nextjs-monorepo-example"
       />
       <MainLayout>
         <Banner />

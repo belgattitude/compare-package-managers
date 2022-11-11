@@ -52,7 +52,7 @@ module.exports = [
   {
     name: 'Standalone (uncompressed)',
     path: ['.next/standalone/**/*'],
-    limit: '26MB',
+    limit: '76MB',
     gzip: false
   }
 ];

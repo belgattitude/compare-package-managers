@@ -1,17 +1,50 @@
 ## Compare package managers
 
-There's few official benchmarks provided by [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) about their speed. 
-Was curious how they compare to a real-world scenario based off [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example).
-Install is the most common operation in ci, local, docker... potential for co2 emissions reductions (:tree: ?)
+Official benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) aren't
+conclusive. Let's test them based on [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example)
+for fun and on the CI. Potential for co2 emissions reductions (♻️🌳❤️ ?)
+
+### TLDR;
+
+#### 📥 Install speed 
+
+**± Equivalent** (when yarn compression disabled). Sounds weird ? 
+Check the detailed comparison below to know why. See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
+and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]).
+
+#### ⏩ Nextjs build speed
+
+Build the nextjs-app example: **Yarn is faster (±2mins vs ±3mins)**. Curious ? See the action in
+[.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
+the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
+
+#### 🔢 Nextjs standalone size
+
+In [standalone mode](https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files) the **nextjs-app is lighter with PNPM (11MB vs 25MB)**. 
+Current [@vercel/nft](https://github.com/vercel/nft) might support pnpm better.
+Lower size = faster cold-starts (important when deploying on lambdas). 
+
+See the section "Debug size" in [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
+the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
+
+#### 🔢 Install size (in monorepo)
+
+If you're not using nextjs (with standalone mode) things are different. Yarn does a better job at deduping and
+also avoid installing native binaries (ie: glibc, musl) thx to [supportedArchitectures](https://yarnpkg.com/configuration/yarnrc#supportedArchitectures).
+See also: https://github.com/pnpm/pnpm/issues/5504.
+
+#### 🦺 Safe to use ?
+
+Seems yarn has matured longer from the [peer-dependency chaos](https://gist.github.com/belgattitude/df235dc0ca3929ef2b56eb26fe6f3bed), 
+expect less issues than with PNPM. Small binary commited in the repo, no version conflicts (till corepack becomes a reality).
+Also to mention a very strict policy about cheksums.... very difficult to abuse. 
+
 
 
 ### Technicalities
 
-- [Yarn 4.0.0-rc.27](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 7.14.1](https://pnpm.io/) - "Fast, disk space efficient package manager".
-
-Official NPM is not currently included to the comparison as it would require some work to support some features 
-used in the example monorepo (ie: workspace protocol...). Feel free to open a PR.  
+- [Yarn 4.0.0-rc.28](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
+- [Pnpm 7.15.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 
@@ -23,7 +56,8 @@ Pnpm is a fast moving package manager recently endorsed by vercel that plays wel
 
 - Reproducible ? 
   - Yarn lightweight js binary is committed within the repo (<3mb). That avoid bugs due to
-    difference in versions. In that regard pnpm lags a behind (>40mb per os/arch). The experimental [corepack](https://nodejs.org/api/corepack.html)
+    difference in versions. PNPM is too big to be stored in the repo, you need to install it.
+    The experimental [corepack](https://nodejs.org/api/corepack.html)
     will bring solution to this. Both package managers already support corepack, but there's some time before a stable ecosystem shift.
   - Yarn is very picky about strictness, checksums... it's quite difficult to abuse. Something that is generally preferred in the enterprise world. 
 - Fast ? 
@@ -42,9 +76,8 @@ Pnpm is a fast moving package manager recently endorsed by vercel that plays wel
 
 The following have been tested on CI. Look for the results in the action history:
 
-- https://github.com/belgattitude/compare-package-managers/actions
+See results in [actions](https://github.com/belgattitude/compare-package-managers/actions)
 
-Latest action is available in [.github/workflows/ci-install-benchmark.yml]()
 
 ### CI: With cache
 

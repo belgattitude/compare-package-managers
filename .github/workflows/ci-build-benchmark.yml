@@ -24,7 +24,7 @@ jobs:
         working-directory: ${{ github.workspace }}/apps/nextjs-app
         run: yarn build
 
-      - name: YARN Debug browser size
+      - name: YARN Debug size
         working-directory: ${{ github.workspace }}/apps/nextjs-app
         run: yarn check-size
 
@@ -41,7 +41,7 @@ jobs:
         working-directory: ${{ github.workspace }}/apps/nextjs-app
         run: pnpm build
 
-      - name: PNPM Debug browser size
+      - name: PNPM Debug size
         working-directory: ${{ github.workspace }}/apps/nextjs-app
         run: pnpm run check-size
 

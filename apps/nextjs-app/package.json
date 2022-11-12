@@ -31,7 +31,7 @@
     "dev": "next",
     "build": "next build",
     "build-fast": "cross-env NEXTJS_IGNORE_TYPECHECK=1 NEXTJS_IGNORE_ESLINT=1 NEXTJS_DISABLE_SENTRY=1 NEXTJS_SENTRY_UPLOAD_DRY_RUN=1 next build",
-    "vercel-build": "yarn share-static-hardlink && next build",
+    "vercel-build": "pnpm run share-static-hardlink && next build",
     "start": "next start",
     "bundle-analyze": "cross-env ANALYZE=true NEXTJS_IGNORE_TYPECHECK=1 NEXTJS_IGNORE_ESLINT=1 NEXTJS_SENTRY_UPLOAD_DRY_RUN=1 yarn build",
     "?share-static-symlink": "echo 'Use this command to link assets... from shared static folder'",

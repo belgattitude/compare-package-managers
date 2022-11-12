@@ -10,7 +10,8 @@ for fun and on the CI. Potential for co2 emissions reductions (♻️🌳❤️ 
 
 **± Equivalent** (when yarn compression disabled). Sounds weird ? 
 Check the detailed comparison below to know why. See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
-and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]).
+and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]). That said if you're deploying on vercel, hacks are needed to preserve the cache. 
+In that case PNPM is faster.
 
 #### ⏩ Nextjs build speed
 

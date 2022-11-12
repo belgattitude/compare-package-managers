@@ -10,22 +10,23 @@ for fun and on the CI. Potential for co2 emissions reductions (♻️🌳❤️ 
 
 **± Equivalent** (when yarn compression disabled). Sounds weird ? 
 Check the detailed comparison below to know why. See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
-and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]).
+and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]). That said if you're deploying on vercel, hacks are needed to preserve the cache. 
+In that case PNPM is faster.
 
-#### ⏩ Nextjs build speed
+#### ⏩ Nextjs build speed and lambda size
 
-Build the nextjs-app example: **Yarn is faster (±2mins vs ±3mins)**. Curious ? See the action in
+Build the nextjs-app [standalone mode](https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files): **Yarn is faster (±2mins vs ±3mins)**. Curious ? See the action in
 [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
 
-#### 🔢 Nextjs standalone size
-
-In [standalone mode](https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files) the **nextjs-app is lighter with PNPM (11MB vs 25MB)**. 
+The **nextjs-app lmbdas are lighter with PNPM (11MB vs 25MB)**. 
 Current [@vercel/nft](https://github.com/vercel/nft) might support pnpm better.
 Lower size = faster cold-starts (important when deploying on lambdas). 
 
 See the section "Debug size" in [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
+
+
 
 #### 🔢 Install size (in monorepo)
 

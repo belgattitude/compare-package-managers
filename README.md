@@ -40,7 +40,7 @@ See also: https://github.com/pnpm/pnpm/issues/5504.
 
 Seems yarn has matured longer from the [peer-dependency chaos](https://gist.github.com/belgattitude/df235dc0ca3929ef2b56eb26fe6f3bed), 
 expect less issues than with PNPM. Small binary commited in the repo, no version conflicts (till corepack becomes a reality).
-Also to mention a very strict policy about cheksums.... very difficult to abuse. 
+Also to mention a very [strict policy](https://github.com/yarnpkg/berry/discussions/4965#discussioncomment-3889198) about cheksums.... very difficult to abuse. 
 
 
 

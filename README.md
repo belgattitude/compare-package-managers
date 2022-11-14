@@ -2,7 +2,9 @@
 
 Official benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) aren't
 conclusive. Let's test them based on [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example)
-for fun and on the CI. Potential for co2 emissions reductions (♻️🌳❤️ ?)
+for fun with CI first approach. 
+
+Potential for co2 emissions reductions (♻️🌳❤️ ?)
 
 ### TLDR;
 
@@ -11,7 +13,7 @@ for fun and on the CI. Potential for co2 emissions reductions (♻️🌳❤️ 
 **± Equivalent** (when yarn compression disabled). Sounds weird ? 
 Check the detailed comparison below to know why. See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]). That said if you're deploying on vercel, hacks are needed to preserve the cache. 
-In that case PNPM is faster.
+Without this PNPM might be faster on vercel.
 
 #### ⏩ Nextjs build speed and lambda size
 
@@ -19,7 +21,7 @@ Build the nextjs-app [standalone mode](https://nextjs.org/docs/advanced-features
 [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
 
-The **nextjs-app lmbdas are lighter with PNPM (11MB vs 25MB)**. 
+The **nextjs-app lambdas are lighter with PNPM (11MB vs 25MB)**. 
 Current [@vercel/nft](https://github.com/vercel/nft) might support pnpm better.
 Lower size = faster cold-starts (important when deploying on lambdas). 
 
@@ -45,7 +47,7 @@ Also to mention a very strict policy about cheksums.... very difficult to abuse.
 ### Technicalities
 
 - [Yarn 4.0.0-rc.28](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 7.15.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Pnpm 7.16.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 

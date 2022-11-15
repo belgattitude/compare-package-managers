@@ -158,10 +158,10 @@ to mimic single-core speed.
 hyperfine --runs=5 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
 --prepare "npm run install:yarn-no-comp; npx --yes rimraf '**/node_modules'" \
 "taskset -c 0 npm run install:yarn-no-comp" \
---prepare "npm run install:yarn-mixed-comp; npx --yes rimraf '**/node_modules'" \
-"taskset -c 0 npm run install:yarn-mixed-comp" \
 --prepare "pnpm i; npx --yes rimraf '**/node_modules'" \
-"taskset -c 0 pnpm i"
+"taskset -c 0 pnpm i" \
+--prepare "npm run install:yarn-mixed-comp; npx --yes rimraf '**/node_modules'" \
+"taskset -c 0 npm run install:yarn-mixed-comp" 
 ```
 
 ## Sponsors :heart:

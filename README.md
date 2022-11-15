@@ -10,8 +10,8 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 #### 📥 Install speed 
 
-**± Equivalent** (when yarn compression disabled). Sounds weird ? 
-Check the detailed comparison below to know why. See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
+[Local usage](#want-to-test-locally-) PNPM at least **2x** faster. On CI **± Equivalent** (when yarn compression disabled). Sounds weird ? 
+Check the [detailed comparison](#ci-with-cache) below to know why. See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]). That said if you're deploying on vercel, hacks are needed to preserve the cache. 
 Without this PNPM might be faster on vercel.
 
@@ -147,12 +147,11 @@ that regarding cache yarn has an advantage: it does not need to be recreated for
 Use [hyperfine](https://github.com/sharkdp/hyperfine) and [taskset](https://man7.org/linux/man-pages/man1/taskset.1.html) 
 to mimic single-core speed.
 
-| Command                                        | Mean [s] | Min [s] | Max [s] | Relative |
-|:-----------------------------------------------|---:|---:|---:|---:|
-| `taskset -c 0 npm run install:yarn-no-comp`    | 39.848 ± 0.937 | 38.671 | 40.832 | 1.95 ± 0.05 |
-| `taskset -c 0 npm run install:yarn-mixed-comp` | 50.460 ± 0.811 | 49.210 | 51.417 | 2.47 ± 0.05 |
-| `taskset -c 0 pnpm i`                          | 20.461 ± 0.196 | 20.185 | 20.663 | 1.00 |
-
+| Command | Mean [s] | Min [s] | Max [s] | Relative |
+|:---|---:|---:|---:|---:|
+| `taskset -c 0 npm run install:yarn-no-comp` | 39.219 ± 0.323 | 38.683 | 39.546 | 1.98 ± 0.02 |
+| `taskset -c 0 pnpm i` | 19.850 ± 0.079 | 19.767 | 19.955 | 1.00 |
+| `taskset -c 0 npm run install:yarn-mixed-comp` | 48.605 ± 0.818 | 47.611 | 49.715 | 2.45 ± 0.04 |
 
 ```bash
 hyperfine --runs=5 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \

@@ -142,6 +142,28 @@ that regarding cache yarn has an advantage: it does not need to be recreated for
 </details>
 
 
+## Want to test locally ?
+
+Use [hyperfine](https://github.com/sharkdp/hyperfine) and [taskset](https://man7.org/linux/man-pages/man1/taskset.1.html) 
+to mimic single-core speed.
+
+| Command                                        | Mean [s] | Min [s] | Max [s] | Relative |
+|:-----------------------------------------------|---:|---:|---:|---:|
+| `taskset -c 0 npm run install:yarn-no-comp`    | 39.848 ± 0.937 | 38.671 | 40.832 | 1.95 ± 0.05 |
+| `taskset -c 0 npm run install:yarn-mixed-comp` | 50.460 ± 0.811 | 49.210 | 51.417 | 2.47 ± 0.05 |
+| `taskset -c 0 pnpm i`                          | 20.461 ± 0.196 | 20.185 | 20.663 | 1.00 |
+
+
+```bash
+hyperfine --runs=5 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
+--prepare "npm run install:yarn-no-comp; npx --yes rimraf '**/node_modules'" \
+"taskset -c 0 npm run install:yarn-no-comp" \
+--prepare "npm run install:yarn-mixed-comp; npx --yes rimraf '**/node_modules'" \
+"taskset -c 0 npm run install:yarn-mixed-comp" \
+--prepare "pnpm i; npx --yes rimraf '**/node_modules'" \
+"taskset -c 0 pnpm i"
+```
+
 ## Sponsors :heart:
 
 If you are enjoying some this guide in your company, I'd really appreciate a [sponsorship](https://github.com/sponsors/belgattitude), a [coffee](https://ko-fi.com/belgattitude) or a dropped star.

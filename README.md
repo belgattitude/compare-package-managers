@@ -4,7 +4,7 @@ Official benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://ya
 conclusive. Let's test them based on [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example)
 for fun with CI first approach. 
 
-Potential for co2 emissions reductions at install and build (♻️🌳❤️ ?)
+Potential for co2 emissions reductions at install, build and runtime (♻️🌳❤️ ?)
 
 ### TLDR;
 

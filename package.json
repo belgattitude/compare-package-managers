@@ -30,6 +30,10 @@
   "scripts": {
     "install:yarn-no-comp": "YARN_CACHE_FOLDER=.yarn/benchmark-cache/no-compress YARN_COMPRESSION_LEVEL=0 YARN_LOCKFILE_FILENAME=yarn.no-compress.lock yarn install --immutable",
     "install:yarn-mixed-comp": "YARN_CACHE_FOLDER=.yarn/benchmark-cache/mixed-compress YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock yarn install --immutable",
+    "install:pnpm": "pnpm install --store-dir ./pnpm/.pnpm-global-store --frozen-lockfile --prefer-offline",
+    "install:yarn-no-comp:cache": "rimraf '**/node_modules' && YARN_CACHE_FOLDER=.yarn/benchmark-cache/no-compress YARN_COMPRESSION_LEVEL=0 YARN_LOCKFILE_FILENAME=yarn.no-compress.lock yarn install --immutable",
+    "install:yarn-mixed-comp:cache": "rimraf '**/node_modules' && YARN_CACHE_FOLDER=.yarn/benchmark-cache/mixed-compress YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock yarn install --immutable",
+    "install:pnpm:cache": "rimraf '**/node_modules' && pnpm install --store-dir .yarn/.pnpm-global-store --frozen-lockfile --prefer-offline",
     "create-lock-files": "./create-benchmark-lock-files.sh",
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach -ptv run clean",
     "g:build": "yarn workspaces foreach -p --topological-dev -v run build",

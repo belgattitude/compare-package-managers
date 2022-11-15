@@ -10,7 +10,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 #### 📥 Install speed 
 
-[Local usage](#want-to-test-locally-) PNPM at least **2x** faster. On CI **± Equivalent** (when yarn compression disabled). Sounds weird ? 
+[Local usage that mimics CI](#want-to-test-locally-) PNPM faster. On CI **± Equivalent** (when yarn compression disabled). Sounds weird ? 
 Check the [detailed comparison](#ci-with-cache) below to know why. See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]). That said if you're deploying on vercel, hacks are needed to preserve the cache. 
 Without this PNPM might be faster on vercel.
@@ -27,8 +27,6 @@ Lower size = faster cold-starts (important when deploying on lambdas).
 
 See the section "Debug size" in [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
-
-
 
 #### 🔢 Install size (in monorepo)
 
@@ -149,18 +147,18 @@ to mimic single-core speed.
 
 | Command | Mean [s] | Min [s] | Max [s] | Relative |
 |:---|---:|---:|---:|---:|
-| `taskset -c 0 npm run install:yarn-no-comp` | 39.219 ± 0.323 | 38.683 | 39.546 | 1.98 ± 0.02 |
-| `taskset -c 0 pnpm i` | 19.850 ± 0.079 | 19.767 | 19.955 | 1.00 |
-| `taskset -c 0 npm run install:yarn-mixed-comp` | 48.605 ± 0.818 | 47.611 | 49.715 | 2.45 ± 0.04 |
+| `taskset -c 0 npm run install:yarn-mixed-comp:cache` | 48.852 ± 1.146 | 47.977 | 50.347 | 1.56 ± 1.24 |
+| `taskset -c 0 npm run install:yarn-no-comp:cache` | 38.916 ± 0.170 | 38.707 | 39.075 | 1.24 ± 0.99 |
+| `taskset -c 0 npm run install:pnpm:cache` | 31.368 ± 24.988 | 20.147 | 76.067 | 1.00 |
 
 ```bash
 hyperfine --runs=5 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
---prepare "npm run install:yarn-no-comp; npx --yes rimraf '**/node_modules'" \
-"taskset -c 0 npm run install:yarn-no-comp" \
---prepare "pnpm i; npx --yes rimraf '**/node_modules'" \
-"taskset -c 0 pnpm i" \
 --prepare "npm run install:yarn-mixed-comp; npx --yes rimraf '**/node_modules'" \
-"taskset -c 0 npm run install:yarn-mixed-comp" 
+"taskset -c 0 npm run install:yarn-mixed-comp:cache" \
+--prepare "npm run install:yarn-no-comp; npx --yes rimraf '**/node_modules'" \
+"taskset -c 0 npm run install:yarn-no-comp:cache" \
+--prepare "pnpm i; npx --yes rimraf '**/node_modules'" \
+"taskset -c 0 npm run install:pnpm:cache" 
 ```
 
 ## Sponsors :heart:

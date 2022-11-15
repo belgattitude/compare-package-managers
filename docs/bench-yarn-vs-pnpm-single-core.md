@@ -1,5 +1,5 @@
 | Command | Mean [s] | Min [s] | Max [s] | Relative |
 |:---|---:|---:|---:|---:|
-| `taskset -c 0 npm run install:yarn-no-comp` | 39.219 ± 0.323 | 38.683 | 39.546 | 1.98 ± 0.02 |
-| `taskset -c 0 pnpm i` | 19.850 ± 0.079 | 19.767 | 19.955 | 1.00 |
-| `taskset -c 0 npm run install:yarn-mixed-comp` | 48.605 ± 0.818 | 47.611 | 49.715 | 2.45 ± 0.04 |
+| `taskset -c 0 npm run install:yarn-mixed-comp:cache` | 48.852 ± 1.146 | 47.977 | 50.347 | 1.56 ± 1.24 |
+| `taskset -c 0 npm run install:yarn-no-comp:cache` | 38.916 ± 0.170 | 38.707 | 39.075 | 1.24 ± 0.99 |
+| `taskset -c 0 npm run install:pnpm:cache` | 31.368 ± 24.988 | 20.147 | 76.067 | 1.00 |

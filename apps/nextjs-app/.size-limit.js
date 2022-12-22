@@ -16,13 +16,13 @@ const limitCfg = {
   pages: {
     '/': '120kb',
     '/404': '85kb',
-    '/_app': '155kb',
+    '/_app': '159kb',
     '/_error': '90kb',
     '/_monitor/sentry/csr-page': '85kb',
     '/_monitor/sentry/ssr-page': '85kb',
     '/admin': '100kb',
     '/auth/login': '120kb',
-    '/home': '105kb',
+    '/home': '100kb',
   },
 };
 const getPageLimits = () => {
@@ -44,15 +44,4 @@ module.exports = [
     path: ['.next/static/css/**/*.css'],
     limit: '10 kB',
   },
-  {
-    name: 'Standalone (gzip)',
-    path: ['.next/standalone/**/*'],
-    limit: '26MB'
-  },
-  {
-    name: 'Standalone (uncompressed)',
-    path: ['.next/standalone/**/*'],
-    limit: '76MB',
-    gzip: false
-  }
 ];

@@ -44,8 +44,8 @@ Also to mention a very [strict policy](https://github.com/yarnpkg/berry/discussi
 
 ### Technicalities
 
-- [Yarn 4.0.0-rc.29](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 7.16.1](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Yarn 4.0.0-rc.34](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
+- [Pnpm 7.19.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 

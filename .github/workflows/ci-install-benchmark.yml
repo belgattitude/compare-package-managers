@@ -83,7 +83,7 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf "**/node_modules"
+        run: npx -y rimraf@3 "**/node_modules"
 
       - name: 📥 Yarn install dependencies (no-compress)
         run: yarn install --immutable --inline-builds
@@ -99,7 +99,7 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf "**/node_modules"
+        run: npx -y rimraf@3 "**/node_modules"
 
       #- name: 📥 Yarn PNP install
       #  run: yarn install --immutable --inline-builds
@@ -130,7 +130,7 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf "**/node_modules"
+        run: npx -y rimraf@3 "**/node_modules"
 
       - name: 📥 PNPM install
         shell: bash
@@ -140,7 +140,7 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf "**/node_modules"
+        run: npx -y rimraf@3 "**/node_modules"
 
       - name: 📥 PNPM install no-cache
         shell: bash
@@ -150,7 +150,7 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf "**/node_modules"
+        run: npx -y rimraf@3 "**/node_modules"
 
       # NPM does not support workspace:^ protocol
       #- name: Install NPM

@@ -45,7 +45,7 @@ Also to mention a very [strict policy](https://github.com/yarnpkg/berry/discussi
 ### Technicalities
 
 - [Yarn 4.0.0-rc.36](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 7.22.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Pnpm 7.25.1](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 
@@ -82,20 +82,27 @@ See results in [actions](https://github.com/belgattitude/compare-package-manager
 
 ### CI: With cache
 
-> Data: 
+> Example from a recent run
 
 | CI Scenario             | Install | CI load cache | CI persist cache |  Setup | 
 |-------------------------|--------:|--------------:|-----------------:|-------:|
-| yarn4 mixed-compression |    ±41s |           ±3s |          *(±6s)* |     0s |
-| yarn4 no compression    |    ±33s |           ±4s |          *(±9s)* |     0s |
-| pnpm7                   |    ±17s |           ±9s |         *(±16s)* |     1s |
+| yarn4 mixed-compression |    ±56s |           ±6s |          *(±6s)* |     0s |
+| yarn4 no compression    |    ±45s |           ±8s |          *(±9s)* |     0s |
+| pnpm7                   |    ±25s |          ±12s |         *(±16s)* |     1s |
 
-With cache pnpm is the fastest: 27s vs yarn no-compress: 37s. But it's important to mention that 
-yarn built-in cache feature allows to almost always start with warm cache (even in case of lock changes).
-For example with pnpm when there's a lock change, the 24s becomes 67s + 9s (load cache) +16s (persist cache)
-which depending on situations makes yarn wins (63s + 4s + 9s).
+At first sight pnpm is the fastest: 25s vs yarn no-compress: 45s. 
 
-Both package managers seems fast though.
+But we have to add the CI load cache (time taken for the github action to load it) time as well and
+time to install.
+
+Thus: pnpm (25+12+1) = 38s vs yarn no-comp (45+6) = 51s.
+
+Important to mention though
+
+- on yarn.lock changes only yarn is able to start with the cache (download differences only and persist)
+- ci persist cache only happens on yarn.lock changes
+- 
+Example
 
 <img src="https://user-images.githubusercontent.com/259798/199542234-f828450c-e8e4-4e61-b391-cc022adaa3eb.png" />
 

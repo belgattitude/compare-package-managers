@@ -16,6 +16,10 @@ inputs:
     description: 'Avoid prisma to automatically generate schema on postinstall'
     required: false
     default: 'true'
+  playwright-skip-browser-download:
+    description: 'Avoid playwright to download browsers automatically'
+    required: false
+    default: '1'
 
 runs:
   using: 'composite'
@@ -61,6 +65,8 @@ runs:
         YARN_INSTALL_STATE_PATH: .yarn/ci-cache/install-state.gz # Very small speedup when lock does not change
         YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
         YARN_COMPRESSION_LEVEL: '0'
+        DEBUG: '1' # Show complete install error messages happening in the link step (think post install scripts)
         # Other environment variables
         HUSKY: '0' # By default do not run HUSKY install
         PRISMA_SKIP_POSTINSTALL_GENERATE: ${{ inputs.skip-prisma-postinstall-generate }}
+        PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: ${{ inputs.playwright-skip-browser-download }}

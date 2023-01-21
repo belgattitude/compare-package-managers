@@ -94,7 +94,8 @@ See results in [actions](https://github.com/belgattitude/compare-package-manager
 The CI fetch cache (time taken for the github action to load and extract the cache archive) 
 differences happens can be explained by:
 
-- PNPM dedupe differently that explains the difference in sizes (see below). 
+- PNPM dedupe differently that explains the difference in sizes (see below).
+- YARN with supportedArchitectures: current does not download extra binaries (ie: linux+musl)
 - When yarn use mixed-compression the internal github zstd don't compress the yarn zip archives.   
 
 But in my experience the fetch cache is varying a lot between runs.

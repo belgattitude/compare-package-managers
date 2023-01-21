@@ -73,7 +73,7 @@
     "docker:nuke:volumes": "docker volume rm $(docker volume ls -q)",
     "docker:nuke:prune-cachemount": "docker builder prune --filter type=exec.cachemount",
     "docker:nuke:prune-buildx": "docker buildx prune",
-    "nuke:node_modules": "npx rimraf@3 '**/node_modules'",
+    "nuke:node_modules": "npx -y rimraf@3.0.1 '**/node_modules' --impl=native",
     "deps:check": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml --deep --mergeConfig",
     "deps:update": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml -u --deep --mergeConfig",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 .",

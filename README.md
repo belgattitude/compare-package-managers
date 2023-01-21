@@ -171,13 +171,14 @@ to mimic single-core speed.
 | `taskset -c 0 npm run install:yarn-no-comp:cache` | 38.916 ± 0.170 | 38.707 | 39.075 | 1.24 ± 0.99 |
 | `taskset -c 0 npm run install:pnpm:cache` | 31.368 ± 24.988 | 20.147 | 76.067 | 1.00 |
 
+
 ```bash
-hyperfine --runs=5 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
---prepare "npm run install:yarn-mixed-comp; npx --yes rimraf '**/node_modules'" \
+hyperfine --runs=3 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
+--prepare "npm run install:yarn-mixed-comp; npx -y rimraf@3.0.1 '**/node_modules'" \
 "taskset -c 0 npm run install:yarn-mixed-comp:cache" \
---prepare "npm run install:yarn-no-comp; npx --yes rimraf '**/node_modules'" \
+--prepare "npm run install:yarn-no-comp; npx -y rimraf@3.0.1 '**/node_modules'" \
 "taskset -c 0 npm run install:yarn-no-comp:cache" \
---prepare "pnpm i; npx --yes rimraf '**/node_modules'" \
+--prepare "pnpm i  npx -y rimraf@3.0.1 '**/node_modules'" \
 "taskset -c 0 npm run install:pnpm:cache" 
 ```
 

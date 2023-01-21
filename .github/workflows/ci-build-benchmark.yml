@@ -30,9 +30,7 @@ jobs:
 
       - name: 🧹 Reset install and builds
         run: |
-          npx -y rimraf@3 "**/node_modules"
-          npx -y rimraf@3 "**/.next"
-          npx -y rimraf@3 "**/.cache"
+          npx -y rimraf@3.0.1 '**/node_modules' '**/.next' '**/.cache'
 
       - name: 📥 PNPM Monorepo install
         uses: ./.github/actions/pnpm-install

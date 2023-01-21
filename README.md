@@ -100,9 +100,7 @@ Thus: pnpm (25+12+1) = 38s vs yarn no-comp (45+6) = 51s.
 Important to mention though
 
 - on yarn.lock changes only yarn is able to start with the cache (download differences only and persist)
-- ci persist cache only happens on yarn.lock changes
-- 
-Example
+- ci persist cache only happens on yarn.lock changes, for example
 
 <img src="https://user-images.githubusercontent.com/259798/199542234-f828450c-e8e4-4e61-b391-cc022adaa3eb.png" />
 
@@ -119,7 +117,9 @@ Example
 Disabling compression in yarn through [compressionLevel: 0](https://yarnpkg.com/configuration/yarnrc#compressionLevel) makes it twice faster. Makes sense as
 the js zip compression brings an overhead on single-core cpu's. Pnpm results are very close, but as it does 
 not dedupe as *well* (?) it actually downloads more packages (multiple typescript versions...). Difficult
-comparison. 
+comparison. Confirmed by gdu and action cache:
+
+![image](https://user-images.githubusercontent.com/259798/213884689-3e550c69-0ca2-4551-b383-c99ebcbbbf8e.png)
 
 ### CI: action/cache
 

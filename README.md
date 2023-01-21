@@ -168,6 +168,8 @@ hyperfine --runs=5 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
 "taskset -c 0 npm run install:pnpm:cache" 
 ```
 
+## Changelog
+
 ## Sponsors :heart:
 
 If you are enjoying some this guide in your company, I'd really appreciate a [sponsorship](https://github.com/sponsors/belgattitude), a [coffee](https://ko-fi.com/belgattitude) or a dropped star.

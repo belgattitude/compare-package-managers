@@ -118,7 +118,7 @@ jobs:
       # - name: 🧹 Remove node_modules
       #   run: npx -y rimraf "**/node_modules"
 
-      - name: 📥 Yarn install no-cache
+      - name: 📥 Yarn install no-cache (mixed-compress)
         run: yarn install --immutable --inline-builds
         env:
           YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
@@ -128,6 +128,21 @@ jobs:
           YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
           YARN_COMPRESSION_LEVEL: 'mixed'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache.gz
+          HUSKY: '0'
+          PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+
+
+      - name: 📥 Yarn install no-cache (no-compress)
+        run: yarn install --immutable --inline-builds
+        env:
+          YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
+          YARN_NM_MODE: 'hardlinks-local'
+          YARN_GLOBAL_FOLDER: '.yarn/global-no-cache/'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache'
+          YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
+          YARN_COMPRESSION_LEVEL: '0'
+          YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress.gz
           HUSKY: '0'
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'

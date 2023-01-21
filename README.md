@@ -13,7 +13,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 Yarn 4.0.0-rc.36 / node_modules / supportedArchitecture:current / compressionLevel: 0 seems the fastest with CI cache.
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
-and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml]). 
+and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
 That said if you're deploying on vercel, hacks are needed to preserve the cache. 
 
 #### ⏩ Nextjs build speed and lambda size

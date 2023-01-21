@@ -21,10 +21,6 @@ Build the nextjs-app [standalone mode](https://nextjs.org/docs/advanced-features
 [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
 
-The **nextjs-app lambdas are lighter with PNPM (11MB vs 25MB)**. 
-Current [@vercel/nft](https://github.com/vercel/nft) might support pnpm better.
-Lower size = faster cold-starts (important when deploying on lambdas). 
-
 See the section "Debug size" in [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
 

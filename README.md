@@ -86,20 +86,26 @@ See results in [actions](https://github.com/belgattitude/compare-package-manager
 
 | CI Scenario             | Install | CI load cache | CI persist cache |  Setup | 
 |-------------------------|--------:|--------------:|-----------------:|-------:|
-| yarn4 mixed-compression |    ±56s |           ±6s |          *(±6s)* |     0s |
-| yarn4 no compression    |    ±45s |           ±8s |          *(±9s)* |     0s |
-| pnpm7                   |    ±25s |          ±12s |         *(±16s)* |     1s |
+| yarn4 mixed-compression |    ±40s |           ±1s |          *(±6s)* |     0s |
+| yarn4 no compression    |    ±14s |           ±4s |          *(±9s)* |     0s |
+| pnpm7                   |    ±19s |           ±9s |         *(±16s)* |     1s |
 
-At first sight pnpm is the fastest: 25s vs yarn no-compress: 45s. 
 
-But we have to add the CI load cache (time taken for the github action to load it) time as well and
-time to install.
 
-Thus: pnpm (25+12+1) = 38s vs yarn no-comp (45+6) = 51s.
+The CI load cache (time taken for the github action to load and extract the cache archive) 
+differences happens on each runs. PNPM dedupe differently that explains the difference (see below). When
+yarn use mixed-compression the internal github zstd don't compress the yarn zip archives.   
+
+Thus: pnpm (19+9+1) = 29s vs yarn no-comp (14+4+0) = 18s.
+
+https://github.com/belgattitude/compare-package-managers/actions/runs/3976413886/jobs/6816885534
+
+![img.png](img.png)
+
 
 Important to mention though
 
-- on yarn.lock changes only yarn is able to start with the cache (download differences only and persist)
+- on yarn.lock changes only yarn is able to start with the cache (download differences only and persist).
 - ci persist cache only happens on yarn.lock changes, for example
 
 <img src="https://user-images.githubusercontent.com/259798/199542234-f828450c-e8e4-4e61-b391-cc022adaa3eb.png" />
@@ -110,9 +116,9 @@ Important to mention though
 
 | CI Scenario              | Install | Setup | 
 |--------------------------|--------:|------:|
-| yarn4 mixed-compression  |   ±120s |    0s |
-| yarn4 no compression     |    ±63s |    0s |
-| pnpm7                    |    ±67s |    1s | 
+| yarn4 mixed-compression  |    ±98s |    0s |
+| yarn4 no compression     |    ±44s |    0s |
+| pnpm7                    |   ±102s |    1s | 
 
 Disabling compression in yarn through [compressionLevel: 0](https://yarnpkg.com/configuration/yarnrc#compressionLevel) makes it twice faster. Makes sense as
 the js zip compression brings an overhead on single-core cpu's. Pnpm results are very close, but as it does 
@@ -125,11 +131,11 @@ comparison. Confirmed by gdu and action cache:
 
 > First run data: https://github.com/belgattitude/compare-package-managers/actions/runs/3346115309/jobs/5542514593
 
-| CI Scenario              | Retrieve cache | Persist cache |   Size | 
-|--------------------------|---------------:|--------------:|-------:|
-| yarn4 mixed-compression  |            ±3s |           ±6s |  203MB |
-| yarn4 no compression     |            ±4s |           ±9s |  169MB |
-| pnpm7                    |            ±8s |          ±16s |  266MB |
+| CI Scenario              | Retrieve cache | Persist cache |  Size | 
+|--------------------------|---------------:|--------------:|------:|
+| yarn4 mixed-compression  |            ±5s |           ±6s | 230MB |
+| yarn4 no compression     |            ±8s |           ±9s | 190MB |
+| pnpm7                    |            ±8s |          ±16s | 273MB |
 
 When already compressed the yarn cache is stored faster in the github cache. Make sense as action/cache won't 
 try to compress something already compressed. On the pnpm side saving the pnpm-store is much slower, this is due

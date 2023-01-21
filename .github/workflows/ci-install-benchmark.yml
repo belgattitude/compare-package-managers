@@ -118,6 +118,9 @@ jobs:
       # - name: 🧹 Remove node_modules
       #   run: npx -y rimraf "**/node_modules"
 
+      - name: 🧹 Remove node_modules
+        run: npx -y rimraf@3 "**/node_modules"
+
       - name: 📥 Yarn install no-cache (mixed-compress)
         run: yarn install --immutable --inline-builds
         env:

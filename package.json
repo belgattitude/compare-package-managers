@@ -73,7 +73,7 @@
     "docker:nuke:volumes": "docker volume rm $(docker volume ls -q)",
     "docker:nuke:prune-cachemount": "docker builder prune --filter type=exec.cachemount",
     "docker:nuke:prune-buildx": "docker buildx prune",
-    "nuke:node_modules": "rimraf '**/node_modules'",
+    "nuke:node_modules": "npx rimraf@3 '**/node_modules'",
     "deps:check": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml --deep --mergeConfig",
     "deps:update": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml -u --deep --mergeConfig",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 .",
@@ -82,7 +82,6 @@
     "postinstall-disabled": "is-ci || yarn husky install"
   },
   "helpResolutions": {
-    "i18next": "https://github.com/i18next/next-i18next/pull/1966",
     "@graphql-inspector/core": "https://github.com/kamilkisiela/graphql-inspector/issues/2175"
   },
   "resolutions": {

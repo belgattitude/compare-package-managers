@@ -69,9 +69,13 @@ Pnpm is a fast moving package manager recently endorsed by vercel that plays wel
     handle the cache on the CI.  
     
 - Space efficient ? 
-  - PNPM claims seems to be based on a scenario in which many versions of the same library co-exists (ie: lodash...). On the example I used, yarn with
-    `hardlinks-local` is lighter. This is also due to difference in duplication. Pnpm does not yet provide built-in deduplication (might be less mature
-    regarding peer-deps too).
+  - PNPM helps when many versions of the same library co-exists (ie: lodash...). It only stores
+    the files that differs (creates a symlink instead). It might help in those situations (a symlink is 4kb so
+    it gives best results if non-changed files are more than 4kb). So useful is some scenarios.
+  - PNPM handles peer-deps differently. In some aspects it's more solid than yarn with node_modules
+    but it does not dedupe them. 
+  - Yarn offers `supportedArchitectures`. When configured to current, it helps to not download native binaries for
+    other plaforms (ie: amd64 + musl for esbuild, swc...)
 
 ### Scenarios
 

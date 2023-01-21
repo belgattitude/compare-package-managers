@@ -81,6 +81,7 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-mixed-compress.gz
           HUSKY: '0'
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@3 "**/node_modules"
@@ -97,6 +98,7 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-compress.gz
           HUSKY: '0'
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@3 "**/node_modules"
@@ -128,6 +130,7 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache.gz
           HUSKY: '0'
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@3 "**/node_modules"
@@ -138,6 +141,7 @@ jobs:
         env:
           HUSKY: '0'
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@3 "**/node_modules"
@@ -148,6 +152,8 @@ jobs:
         env:
           HUSKY: '0'
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@3 "**/node_modules"

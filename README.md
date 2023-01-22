@@ -184,7 +184,7 @@ hyperfine --runs=3 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
 "taskset -c 0 npm run install:yarn-mixed-comp:cache" \
 --prepare "npm run install:yarn-no-comp; npx -y rimraf@3.0.1 '**/node_modules'" \
 "taskset -c 0 npm run install:yarn-no-comp:cache" \
---prepare "pnpm i  npx -y rimraf@3.0.1 '**/node_modules'" \
+--prepare "pnpm i; npx -y rimraf@3.0.1 '**/node_modules'" \
 "taskset -c 0 npm run install:pnpm:cache" 
 ```
 

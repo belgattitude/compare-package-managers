@@ -2,7 +2,7 @@
 
 Benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) already exists. 
 
-Let's test the differnces based on [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example)
+Let's test the differences based on [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example)
 for fun with CI first approach. 
 
 Potential for co2 emissions reductions at install, build and runtime (♻️🌳❤️) ?
@@ -27,7 +27,7 @@ Globally very close to each other.
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
 
-That said if you're deploying on vercel, hacks are needed to preserve the cache on lock changes. 
+That said if you're deploying on vercel, hacks are needed to preserve the yarn cache on lock changes. 
 
 #### ⏩ Nextjs build speed and lambda size
 
@@ -35,7 +35,7 @@ Build the nextjs-app [standalone mode](https://nextjs.org/docs/advanced-features
 [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
 
-That said I couldn't reliably make prisma works with pnpm (without `auto-install-peers=true` wich increase the deps a lot), 
+That said I couldn't reliably make prisma works with pnpm (without `auto-install-peers=true` which increase the deps a lot), 
 neither nextjs with standalone mode.
 
 See the section "Debug size" in [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and

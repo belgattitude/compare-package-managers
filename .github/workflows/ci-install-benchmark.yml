@@ -100,9 +100,8 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf@3.0.1 "**/node_modules"
-
+      # - name: 🧹 Remove node_modules
+      #  run: npx -y rimraf@3.0.1 "**/node_modules"
       #- name: 📥 Yarn PNP install
       #  run: yarn install --immutable --inline-builds
       #  env:

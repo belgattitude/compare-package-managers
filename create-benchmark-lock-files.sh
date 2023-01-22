@@ -1,9 +1,7 @@
 #!/bin/bash
 
-npx rimraf@3 '*.lock'
-
 rm -f '.yarn/install-state.gz'
-npx -y rimraf@3.0.1 '**/node_modules'
+npx -y rimraf@3.0.1 '**/node_modules' '*.lock'
 
 YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock yarn install
 YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock yarn dedupe

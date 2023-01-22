@@ -10,7 +10,12 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 #### 📥 Install speed 
 
-With cache PNPM 7.22.1 and Yarn 4.0.0-rc.36 (linker: node_modules, supportedArchitecture: current, compressionLevel: 0) seems equally fast on the CI.
+On this example repo with cache 
+
+- PNPM 7.22.1
+- Yarn 4.0.0-rc.36 (linker: node_modules, supportedArchitecture: current, compressionLevel: 0)
+
+Seems equally fast on the CI (pnpm is 25% faster but less efficient with cache persistence across lock changes).
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
@@ -86,11 +91,11 @@ See results in [actions](https://github.com/belgattitude/compare-package-manager
 
 > Example from a recent run
 
-| CI Scenario             | Install | CI fetch cache | CI persist cache |  Setup | 
-|-------------------------|--------:|---------------:|-----------------:|-------:|
-| yarn4 mixed-compression |    ±40s |            ±7s |          *(±6s)* |     0s |
-| yarn4 no compression    |    ±30s |            ±4s |          *(±9s)* |     0s |
-| pnpm7                   |    ±19s |            ±9s |         *(±16s)* |     1s |
+| CI Scenario             | Install | CI fetch cache | CI persist cache | Setup | 
+|-------------------------|--------:|---------------:|-----------------:|------:|
+| yarn4 mixed-compression |    ±49s |            ±5s |          *(±6s)* |    0s |
+| yarn4 no compression    |    ±39s |            ±3s |          *(±9s)* |    0s |
+| pnpm7                   |    ±21s |           ±10s |         *(±16s)* |    2s |
 
 
 The CI fetch cache (time taken for the github action to load and extract the cache archive) 
@@ -100,13 +105,13 @@ differences happens can be explained by:
 - YARN with supportedArchitectures: current does not download extra binaries (ie: linux+musl)
 - When yarn use mixed-compression the internal github zstd don't compress the yarn zip archives.   
 
-But in my experience the fetch cache is varying a lot between runs.
 
-Thus: pnpm (19+9+1) = 29s vs yarn no-comp (14+4+0) = 18s.
+Thus: pnpm (21+10+2) = 33s vs yarn no-comp (39+3+0) = 41s.
 
-https://github.com/belgattitude/compare-package-managers/actions/runs/3976413886/jobs/6816885534
+https://github.com/belgattitude/compare-package-managers/actions/runs/3977311379/jobs/6818357285
 
 ![img.png](img.png)
+
 
 
 Important to mention though

@@ -14,14 +14,17 @@ With cache PNPM 7.22.1 and Yarn 4.0.0-rc.36 (linker: node_modules, supportedArch
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
-That said if you're deploying on vercel, hacks are needed to preserve the cache. 
+
+That said if you're deploying on vercel, hacks are needed to preserve the cache on lock changes. 
 
 #### ⏩ Nextjs build speed and lambda size
 
 Build the nextjs-app [standalone mode](https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files): **Yarn / Pnpm are euqivalent (+/- 1min)**. Curious ? See the action in
 [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
-That said I couldn't reliably make prisma works with pnpm and standalone mode.
+
+That said I couldn't reliably make prisma works with pnpm (without `auto-install-peers=true` wich increase the deps a lot), 
+neither nextjs with standalone mode.
 
 See the section "Debug size" in [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
@@ -86,7 +89,7 @@ See results in [actions](https://github.com/belgattitude/compare-package-manager
 | CI Scenario             | Install | CI fetch cache | CI persist cache |  Setup | 
 |-------------------------|--------:|---------------:|-----------------:|-------:|
 | yarn4 mixed-compression |    ±40s |            ±1s |          *(±6s)* |     0s |
-| yarn4 no compression    |    ±14s |            ±4s |          *(±9s)* |     0s |
+| yarn4 no compression    |    ±30s |            ±4s |          *(±9s)* |     0s |
 | pnpm7                   |    ±19s |            ±9s |         *(±16s)* |     1s |
 
 
@@ -119,9 +122,9 @@ Important to mention though
 
 | CI Scenario              | Install | Setup | 
 |--------------------------|--------:|------:|
-| yarn4 mixed-compression  |    ±98s |    0s |
-| yarn4 no compression     |    ±44s |    0s |
-| pnpm7                    |   ±102s |    1s | 
+| yarn4 mixed-compression  |   ±140s |    0s |
+| yarn4 no compression     |    ±54s |    0s |
+| pnpm7                    |    ±50s |    1s | 
 
 Disabling compression in yarn through [compressionLevel: 0](https://yarnpkg.com/configuration/yarnrc#compressionLevel) makes it twice faster. Makes sense as
 the js zip compression brings an overhead on single-core cpu's. Pnpm results are very close, but as it does 

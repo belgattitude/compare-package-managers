@@ -88,7 +88,7 @@ See results in [actions](https://github.com/belgattitude/compare-package-manager
 
 | CI Scenario             | Install | CI fetch cache | CI persist cache |  Setup | 
 |-------------------------|--------:|---------------:|-----------------:|-------:|
-| yarn4 mixed-compression |    ±40s |            ±1s |          *(±6s)* |     0s |
+| yarn4 mixed-compression |    ±40s |            ±7s |          *(±6s)* |     0s |
 | yarn4 no compression    |    ±30s |            ±4s |          *(±9s)* |     0s |
 | pnpm7                   |    ±19s |            ±9s |         *(±16s)* |     1s |
 
@@ -137,13 +137,13 @@ comparison. Confirmed by gdu and action cache:
 
 > First run data: https://github.com/belgattitude/compare-package-managers/actions/runs/3346115309/jobs/5542514593
 
-**Warning** the retrieve/persists times varies a lot between runs.
+**Warning** the fetch/persist times varies a lot between runs.
 
-| CI Scenario              | Retrieve cache | Persist cache |  Size | 
-|--------------------------|---------------:|--------------:|------:|
-| yarn4 mixed-compression  |            ±5s |           ±6s | 230MB |
-| yarn4 no compression     |            ±8s |           ±9s | 190MB |
-| pnpm7                    |           ±14s |          ±16s | 273MB |
+| CI Scenario              | Fetch cache | Persist cache |  Size | 
+|--------------------------|------------:|--------------:|------:|
+| yarn4 mixed-compression  |         ±5s |           ±6s | 220MB |
+| yarn4 no compression     |         ±8s |           ±9s | 180MB |
+| pnpm7                    |        ±14s |          ±16s | 273MB |
 
 When already compressed the yarn cache is stored faster in the github cache. Make sense as action/cache won't 
 try to compress something already compressed. On the pnpm side saving the pnpm-store is much slower, this is due

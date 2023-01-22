@@ -10,7 +10,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 #### 📥 Install speed 
 
-Yarn 4.0.0-rc.36 / node_modules / supportedArchitecture:current / compressionLevel: 0 seems the fastest with CI cache.
+PNPM 7 and Yarn 4.0.0-rc.36 / node_modules / supportedArchitecture:current / compressionLevel: 0 seems equally fast on the CI.
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
@@ -34,11 +34,8 @@ See also: https://github.com/pnpm/pnpm/issues/5504.
 
 #### 🦺 Safe to use ?
 
-Seems yarn has matured longer from the [peer-dependency chaos](https://gist.github.com/belgattitude/df235dc0ca3929ef2b56eb26fe6f3bed), 
-expect less issues than with PNPM. Small binary commited in the repo, no version conflicts (till corepack becomes a reality).
-Also to mention a very [strict policy](https://github.com/yarnpkg/berry/discussions/4965#discussioncomment-3889198) about cheksums.... very difficult to abuse. 
-
-
+They differ in the hoisting structure and the peer-dependency strategy. Expect different kind of edge cases. In my 
+experience pnpm is sometimes harder to work with (ie prisma)
 
 ### Technicalities
 

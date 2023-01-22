@@ -12,10 +12,16 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 On this example repo with cache 
 
-- PNPM 7.22.1
-- Yarn 4.0.0-rc.36 (linker: node_modules, supportedArchitecture: current, compressionLevel: 0)
+- PNPM 7.22.1 - 33s
+- Yarn 4.0.0-rc.36 - 42s (linker: node_modules, supportedArchitecture: current, compressionLevel: 0)
 
-Seems equally fast on the CI (pnpm is 25% faster but less efficient with cache persistence across lock changes).
+| CI Scenario             | Install | CI fetch cache | CI persist (lock changes) | Setup | 
+|-------------------------|--------:|---------------:|--------------------------:|------:|
+| yarn4 no compression    |    ±39s |            ±3s |                   *(±9s)* |    0s |
+| pnpm7                   |    ±21s |           ±10s |                  *(±16s)* |    2s |
+
+
+Globally very close to each other. 
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
@@ -173,9 +179,9 @@ to mimic single-core speed.
 
 | Command | Mean [s] | Min [s] | Max [s] | Relative |
 |:---|---:|---:|---:|---:|
-| `taskset -c 0 npm run install:yarn-mixed-comp:cache` | 48.852 ± 1.146 | 47.977 | 50.347 | 1.56 ± 1.24 |
-| `taskset -c 0 npm run install:yarn-no-comp:cache` | 38.916 ± 0.170 | 38.707 | 39.075 | 1.24 ± 0.99 |
-| `taskset -c 0 npm run install:pnpm:cache` | 31.368 ± 24.988 | 20.147 | 76.067 | 1.00 |
+| `taskset -c 0 npm run install:yarn-mixed-comp:cache` | 46.963 ± 0.938 | 46.052 | 47.926 | 2.46 ± 0.05 |
+| `taskset -c 0 npm run install:yarn-no-comp:cache` | 37.743 ± 0.277 | 37.424 | 37.926 | 1.98 ± 0.02 |
+| `taskset -c 0 npm run install:pnpm:cache` | 19.085 ± 0.037 | 19.045 | 19.118 | 1.00 |
 
 
 ```bash
@@ -184,7 +190,7 @@ hyperfine --runs=3 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
 "taskset -c 0 npm run install:yarn-mixed-comp:cache" \
 --prepare "npm run install:yarn-no-comp; npx -y rimraf@3.0.1 '**/node_modules'" \
 "taskset -c 0 npm run install:yarn-no-comp:cache" \
---prepare "pnpm i; npx -y rimraf@3.0.1 '**/node_modules'" \
+--prepare "npm run install:pnpm:cache; npx -y rimraf@3.0.1 '**/node_modules'" \
 "taskset -c 0 npm run install:pnpm:cache" 
 ```
 

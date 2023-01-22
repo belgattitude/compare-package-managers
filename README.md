@@ -10,7 +10,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 #### 📥 Install speed 
 
-PNPM 7 and Yarn 4.0.0-rc.36 / node_modules / supportedArchitecture:current / compressionLevel: 0 seems equally fast on the CI.
+With cache PNPM 7.22.1 and Yarn 4.0.0-rc.36 (linker: node_modules, supportedArchitecture: current, compressionLevel: 0) seems equally fast on the CI.
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
@@ -56,20 +56,21 @@ Pnpm is a fast moving package manager recently endorsed by vercel that plays wel
     The experimental [corepack](https://nodejs.org/api/corepack.html)
     will bring solution to this. Both package managers already support corepack, but there's some time before a stable ecosystem shift.
   - Yarn is very picky about strictness, checksums... it's quite difficult to abuse. Something that is generally preferred in the enterprise world. 
+
 - Fast ? 
   - On CI what makes the biggest different is to set up a cache. Simple and easy. 
     See [pnpm cache gist](https://gist.github.com/belgattitude/838b2eba30c324f1f0033a797bab2e31) and [yarn cache gist](https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a),
-    that gives a 2x boost (and decrease co2 footprint)    
-  - It's super difficult to compare this. I would say in simple scenarios or whenever you deal with many different versions of the same dep: PNPM rules. In monorepos with a couple of 'native' deps (ie: prisma, swc, esbuild...) Yarn should be faster.    
+    that gives a >2x boost.    
+  - It's super difficult to compare this. I would say in simple scenarios or whenever you deal with many versions of the same dep: PNPM rules. In monorepos with a couple of 'native' deps (ie: prisma, swc, esbuild...) Yarn should be faster.    
     
 - Space efficient ? 
   - PNPM helps when many versions of the same library co-exists (ie: lodash...). It only stores
     the files that differs (creates a symlink instead). It might help in those situations (a symlink is 4kb so
-    it gives best results if non-changed files are more than 4kb). So useful is some scenarios.
+    it gives best results if non-changed files are more than 4kb). So useful is some specific scenarios.
   - PNPM handles peer-deps differently. In some aspects it's more solid than yarn with node_modules
-    but it does not dedupe them. 
+    but it does not dedupe them (leading to more versions installed). 
   - Yarn offers `supportedArchitectures`. When configured to current, it helps to not download native binaries for
-    other plaforms (ie: amd64 + musl for esbuild, swc...)
+    other platforms (ie: amd64 + musl for esbuild, swc...)
 
 ### Scenarios
 

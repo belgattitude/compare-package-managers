@@ -1,22 +1,22 @@
 {
   "name": "vite-app",
   "version": "0.6.11",
-  "license": "MIT",
   "private": true,
+  "license": "MIT",
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
     "clean": "rimraf ./dist ./tsconfig.tsbuildinfo ./node_modules/.vite",
+    "dev": "vite",
+    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --cache --cache-location ../../.cache/eslint/vite-app.eslintcache",
     "serve": "vite preview",
     "test": "yarn test-unit",
     "test-unit": "echo 'No test present yet'",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --cache --cache-location ../../.cache/eslint/vite-app.eslintcache",
-    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix"
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@emotion/react": "11.10.5",
-    "@emotion/styled": "11.10.5",
+    "@emotion/react": "11.10.6",
+    "@emotion/styled": "11.10.6",
     "@your-org/common-i18n": "workspace:^",
     "@your-org/core-lib": "workspace:^",
     "@your-org/ui-lib": "workspace:^",
@@ -24,21 +24,21 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.20.12",
-    "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.10",
-    "@vitejs/plugin-react": "3.0.1",
-    "@vitest/coverage-istanbul": "0.27.3",
-    "@vitest/ui": "0.27.3",
+    "@babel/core": "7.21.0",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@vitejs/plugin-react": "3.1.0",
+    "@vitest/coverage-istanbul": "0.29.2",
+    "@vitest/ui": "0.29.2",
     "@your-org/eslint-config-bases": "workspace:^",
-    "eslint": "8.32.0",
-    "happy-dom": "8.1.5",
-    "prettier": "2.8.3",
-    "rimraf": "4.1.1",
-    "typescript": "4.9.4",
-    "vite": "4.0.4",
+    "eslint": "8.35.0",
+    "happy-dom": "8.9.0",
+    "prettier": "2.8.4",
+    "rimraf": "4.1.2",
+    "typescript": "4.9.5",
+    "vite": "4.1.4",
     "vite-plugin-svgr": "2.4.0",
     "vite-tsconfig-paths": "4.0.5",
-    "vitest": "0.27.3"
+    "vitest": "0.29.2"
   }
 }

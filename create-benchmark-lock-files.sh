@@ -23,3 +23,5 @@ npx -y rimraf@3.0.1 '**/node_modules'
 rm ./pnpm-lock.yaml
 
 pnpm i
+
+pnpm dedupe

@@ -1,18 +1,7 @@
 {
   "name": "@your-org/ts-utils",
   "version": "1.1.1",
-  "license": "MIT",
   "private": true,
-  "homepage": "https://github.com/belgattitude/nextjs-monorepo-example",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/belgattitude/nextjs-monorepo-example",
-    "directory": "packages/ts-utils"
-  },
-  "author": {
-    "name": "Vanvelthem Sébastien",
-    "url": "https://github.com/belgattitude"
-  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -22,41 +11,52 @@
     },
     "./package.json": "./package.json"
   },
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/belgattitude/nextjs-monorepo-example",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belgattitude/nextjs-monorepo-example",
+    "directory": "packages/ts-utils"
+  },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch",
-    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/ts-utils.eslintcache",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "check-dist": "es-check -v",
     "check-size": "size-limit",
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "dev": "tsup --watch",
+    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/ts-utils.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-jest": "jest --config ./jest.config.js",
     "test-unit-watch": "vitest watch --ui",
-    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix"
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@size-limit/file": "8.1.2",
-    "@types/jest": "29.2.6",
-    "@types/node": "18.11.18",
-    "@vitest/coverage-istanbul": "0.27.3",
-    "@vitest/ui": "0.27.3",
+    "@size-limit/file": "8.2.4",
+    "@types/jest": "29.4.0",
+    "@types/node": "18.14.2",
+    "@vitest/coverage-istanbul": "0.29.2",
+    "@vitest/ui": "0.29.2",
     "@your-org/eslint-config-bases": "workspace:^",
     "cross-env": "7.0.3",
-    "es-check": "7.0.1",
-    "eslint": "8.32.0",
-    "get-tsconfig": "4.3.0",
-    "jest": "29.3.1",
-    "rimraf": "4.1.1",
-    "size-limit": "8.1.2",
+    "es-check": "7.1.0",
+    "eslint": "8.35.0",
+    "get-tsconfig": "4.4.0",
+    "jest": "29.4.3",
+    "rimraf": "4.1.2",
+    "size-limit": "8.2.4",
     "ts-jest": "29.0.5",
-    "tslib": "2.4.1",
-    "tsup": "6.5.0",
-    "typescript": "4.9.4",
-    "vite": "4.0.4",
+    "tslib": "2.5.0",
+    "tsup": "6.6.3",
+    "typescript": "4.9.5",
+    "vite": "4.1.4",
     "vite-tsconfig-paths": "4.0.5",
-    "vitest": "0.27.3"
+    "vitest": "0.29.2"
   },
   "engines": {
     "node": ">=14.16"

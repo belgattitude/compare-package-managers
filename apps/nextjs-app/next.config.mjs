@@ -5,10 +5,12 @@ import path from 'node:path';
 import url from 'node:url';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs'; // https://docs.sentry.io/platforms/javascript/guides/nextjs/
-
 import { createSecureHeaders } from 'next-secure-headers';
 import pc from 'picocolors';
 import nextI18nConfig from './next-i18next.config.js';
+
+// @ts-ignore
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 
 const workspaceRoot = path.resolve(
   path.dirname(url.fileURLToPath(import.meta.url)),
@@ -151,6 +153,10 @@ const nextConfig = {
 
   sentry: {
     hideSourceMaps: true,
+    // To disable the automatic instrumentation of API route handlers and server-side data fetching functions
+    // In other words, disable if you prefer to explicitly handle sentry per api routes (ie: wrapApiHandlerWithSentry)
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#configure-server-side-auto-instrumentation
+    autoInstrumentServerFunctions: false,
   },
 
   // @link https://nextjs.org/docs/basic-features/image-optimization
@@ -175,7 +181,15 @@ const nextConfig = {
   // Packages to be transpiled part of nextjs build to follow nextjs/browserslist compatibility.
   // This replaces next-transpile-modules starting from nextjs 13.1, if you're relying on css
   // please see https://github.com/vercel/next.js/issues/42837
-  transpilePackages: isProd ? ['ky'] : [],
+  transpilePackages: isProd
+    ? [
+        // ky is build for modern browsers
+        'ky',
+        // example tailwind merge
+        // tailwind-merge contains nullish operator ?.
+        // 'tailwind-merge',
+      ]
+    : [],
 
   modularizeImports: {
     '@mui/material': {
@@ -257,6 +271,12 @@ const nextConfig = {
       })
     );
 
+    // Nex with Prisma 4.11.0 (helps standalone build in monorepos)
+    // https://www.prisma.io/docs/guides/database/troubleshooting-orm/help-articles/nextjs-prisma-client-monorepo
+    if (isServer) {
+      config.plugins.push(new PrismaPlugin());
+    }
+
     config.module.rules.push({
       test: /\.svg$/,
       issuer: /\.(js|ts)x?$/,
@@ -292,8 +312,6 @@ const nextConfig = {
 let config = nextConfig;
 
 if (!NEXTJS_DISABLE_SENTRY) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore because sentry does not match nextjs current definitions
   config = withSentryConfig(config, {
     // Additional config options for the Sentry Webpack plugin. Keep in mind that
     // the following options are set automatically, and overriding them is not

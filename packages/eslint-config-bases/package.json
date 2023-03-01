@@ -1,18 +1,7 @@
 {
   "name": "@your-org/eslint-config-bases",
   "version": "1.5.3",
-  "license": "MIT",
   "private": true,
-  "homepage": "https://github.com/belgattitude/nextjs-monorepo-example",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/belgattitude/nextjs-monorepo-example",
-    "directory": "packages/eslint-config-bases"
-  },
-  "author": {
-    "name": "Vanvelthem Sébastien",
-    "url": "https://github.com/belgattitude"
-  },
   "type": "commonjs",
   "main": "./src/index.js",
   "exports": {
@@ -56,18 +45,27 @@
       "require": "./src/bases/typescript.js"
     }
   },
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/belgattitude/nextjs-monorepo-example",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belgattitude/nextjs-monorepo-example",
+    "directory": "packages/eslint-config-bases"
+  },
   "scripts": {
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "fix-all-files": "eslint  --ext .ts,.tsx,.js,.jsx --fix",
     "lint": "eslint  --ext .ts,.js,.cjs,.mjs --cache --cache-location ../../.cache/eslint/eslint-config-bases.eslintcache",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
-    "fix-all-files": "eslint  --ext .ts,.tsx,.js,.jsx --fix"
+    "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.2",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.27.5",
@@ -76,22 +74,40 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-playwright": "^0.12.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-regexp": "^1.12.0",
     "eslint-plugin-sonarjs": "^0.18.0",
-    "eslint-plugin-storybook": "^0.6.10",
-    "eslint-plugin-tailwindcss": "^3.8.0",
-    "eslint-plugin-testing-library": "^5.9.1",
-    "prettier": "^2.8.3"
+    "eslint-plugin-storybook": "^0.6.11",
+    "eslint-plugin-tailwindcss": "^3.10.1",
+    "eslint-plugin-testing-library": "^5.10.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "14.0.0",
+    "@types/jest": "29.4.0",
+    "@types/node": "18.14.2",
+    "@types/prettier": "2.7.2",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "eslint": "8.35.0",
+    "prettier": "2.8.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "rimraf": "4.1.2",
+    "typescript": "4.9.5"
   },
   "peerDependencies": {
     "eslint": "^8.22.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "typescript": "^4.7.4"
+    "prettier": "^2.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.5"
   },
   "peerDependenciesMeta": {
+    "prettier": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },
@@ -101,17 +117,5 @@
     "typescript": {
       "optional": true
     }
-  },
-  "devDependencies": {
-    "@types/jest": "29.2.6",
-    "@types/node": "18.11.18",
-    "@types/prettier": "2.7.2",
-    "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.10",
-    "eslint": "8.32.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "rimraf": "4.1.1",
-    "typescript": "4.9.4"
   }
 }

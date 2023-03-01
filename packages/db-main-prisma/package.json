@@ -1,76 +1,76 @@
 {
   "name": "@your-org/db-main-prisma",
-  "version": "2.13.0",
-  "license": "MIT",
+  "version": "2.14.0",
   "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "main": "./src/index.ts",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "license": "MIT",
   "homepage": "https://github.com/belgattitude/nextjs-monorepo-example",
   "repository": {
     "type": "git",
     "url": "https://github.com/belgattitude/nextjs-monorepo-example",
     "directory": "packages/db-main-prisma"
   },
-  "author": {
-    "name": "Vanvelthem Sébastien",
-    "url": "https://github.com/belgattitude"
-  },
-  "type": "module",
-  "sideEffects": false,
-  "main": "./src/index.ts",
-  "prisma": {
-    "seed": "tsx ./prisma/seed.ts"
-  },
   "scripts": {
+    "build": "tsup",
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "debug-test-e2e": "cross-env DEBUG=testcontainers vitest run $@",
+    "dev": "tsup --watch",
+    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --cache --cache-location ../../.cache/eslint/db-main-prisma.eslintcache",
+    "postinstall": "prisma generate",
+    "prisma-db-push": "dotenv-flow -- yarn prisma db push",
+    "prisma-db-seed": "dotenv-flow -- yarn prisma db seed",
     "prisma-migrate": "dotenv-flow -- yarn prisma migrate",
     "prisma-migrate-reset": "dotenv-flow -- yarn prisma migrate reset",
-    "prisma-db-seed": "dotenv-flow -- yarn prisma db seed",
-    "prisma-db-push": "dotenv-flow -- yarn prisma db push",
     "prisma-studio": "dotenv-flow -- yarn prisma studio",
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --cache --cache-location ../../.cache/eslint/db-main-prisma.eslintcache",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "test": "run-s test:unit",
-    "test-unit": "echo \"No unit tests yet\"",
     "test-e2e": "dotenv-flow -- yarn vitest run",
-    "debug-test-e2e": "cross-env DEBUG=testcontainers vitest run $@",
-    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix",
-    "postinstall": "prisma generate"
-  },
-  "peerDependencies": {
-    "@pothos/plugin-prisma": "^3.35.8",
-    "@prisma/client": "^4.5.0",
-    "graphql": "^16.6.0"
+    "test-unit": "echo \"No unit tests yet\"",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@pothos/core": "3.24.0",
-    "@pothos/plugin-prisma": "3.40.1",
-    "@prisma/client": "4.9.0",
+    "@pothos/core": "3.27.1",
+    "@pothos/plugin-prisma": "3.41.3",
+    "@prisma/client": "4.11.0",
     "@soluble/dsn-parser": "1.6.0",
-    "@types/node": "18.11.18",
-    "@vitest/coverage-istanbul": "0.27.3",
-    "@vitest/ui": "0.27.3",
+    "@types/node": "18.14.2",
+    "@vitest/coverage-istanbul": "0.29.2",
+    "@vitest/ui": "0.29.2",
     "@your-org/eslint-config-bases": "workspace:^",
     "camelcase": "7.0.1",
     "cross-env": "7.0.3",
     "dotenv-flow": "3.2.0",
     "dotenv-flow-cli": "1.0.0",
-    "eslint": "8.32.0",
-    "execa": "6.1.0",
+    "eslint": "8.35.0",
+    "execa": "7.0.0",
     "graphql": "16.6.0",
     "is-port-reachable": "4.0.0",
-    "keyword-extractor": "0.0.23",
+    "keyword-extractor": "0.0.25",
     "npm-run-all": "4.1.5",
     "picocolors": "1.0.0",
-    "prettier": "2.8.3",
-    "prisma": "4.9.0",
-    "rimraf": "4.1.1",
+    "prettier": "2.8.4",
+    "prisma": "4.11.0",
+    "rimraf": "4.1.2",
     "transliteration": "2.3.5",
-    "tsup": "6.5.0",
-    "tsx": "3.12.2",
-    "typescript": "4.9.4",
-    "vite": "4.0.4",
+    "tsup": "6.6.3",
+    "tsx": "3.12.3",
+    "typescript": "4.9.5",
+    "vite": "4.1.4",
     "vite-tsconfig-paths": "4.0.5",
-    "vitest": "0.27.3"
+    "vitest": "0.29.2"
+  },
+  "peerDependencies": {
+    "@pothos/plugin-prisma": "^3.41.0",
+    "@prisma/client": "^4.10.1",
+    "graphql": "^16.6.0"
+  },
+  "prisma": {
+    "seed": "tsx ./prisma/seed.ts"
   }
 }

@@ -22,7 +22,7 @@ runs:
   steps:
     - uses: pnpm/action-setup@v2.2.4
       with:
-        version: 7.25.1
+        version: 7.28.0
 
     - name: Expose pnpm config(s) through "$GITHUB_OUTPUT"
       id: pnpm-config

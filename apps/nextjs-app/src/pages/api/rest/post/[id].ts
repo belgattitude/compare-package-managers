@@ -11,18 +11,18 @@ const schema = zodReq({
   query: {
     id: z.preprocess((input) => {
       const processed = z
-        .string()
-        .regex(/^\d+$/)
-        .transform(Number)
-        .safeParse(input);
+          .string()
+          .regex(/^\d+$/)
+          .transform(Number)
+          .safeParse(input);
       return processed.success ? processed.data : input;
     }, z.number().min(0)),
   },
 });
 
 export default async function handleGetPost(
-  req: NextApiRequest,
-  res: NextApiResponse
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
   try {
     const { id } = schema.parse(req).query;
@@ -34,11 +34,11 @@ export default async function handleGetPost(
     return res.json(JsonApiResponseFactory.fromSuccess(post));
   } catch (e) {
     const { statusCode, message } =
-      e instanceof HttpException
-        ? e
-        : { statusCode: 500, message: 'Unknown error' };
+        e instanceof HttpException
+            ? e
+            : { statusCode: 500, message: 'Unknown error' };
     return res
-      .status(statusCode)
-      .json(JsonApiResponseFactory.fromError(message, statusCode));
+        .status(statusCode)
+        .json(JsonApiResponseFactory.fromError(message, statusCode));
   }
 }

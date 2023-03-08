@@ -13609,9 +13609,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.284":
-  version: 1.4.324
-  resolution: "electron-to-chromium@npm:1.4.324"
-  checksum: e573d2e13f0aa7f766552589edab37ca0f0f1648ac2428265566241cac5fdd98e17184f27af0f7cc75aacabc9461de28966bef16e10c4c788928b82cf4a007fa
+  version: 1.4.325
+  resolution: "electron-to-chromium@npm:1.4.325"
+  checksum: 26dd773a29038ebd2508a1cd67c0407c064f38d506ed4795f88383ff0d75f441d4c48fec4e7a1eee048ddb1e0187e676f6b0b5ad6fedb89501aed0dc5c3b553e
   languageName: node
   linkType: hard
 
@@ -21950,7 +21950,7 @@ __metadata:
     vite-plugin-svgr: "npm:2.4.0"
     vite-tsconfig-paths: "npm:4.0.5"
     vitest: "npm:0.29.2"
-    zod: "npm:3.20.6"
+    zod: "npm:3.21.4"
   languageName: unknown
   linkType: soft
 
@@ -30848,7 +30848,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.20.2":
+"zod@npm:3.21.4, zod@npm:^3.20.2":
   version: 3.21.4
   resolution: "zod@npm:3.21.4"
   checksum: 161e8cf7aea38a99244d65da4a9477d9d966f6a533e503feaa20ff7968a9691065c38c6f1eab5cbbdc8374142fff4a05c9cacb8479803ab50ab6a6ca80e5d624

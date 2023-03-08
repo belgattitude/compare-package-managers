@@ -18,9 +18,9 @@ On this example repo **with cache**
 
 | CI Scenario             | Install | CI fetch cache | CI persist (lock changes) | Setup | 
 |-------------------------|--------:|---------------:|--------------------------:|------:|
-| yarn4 mixed compression |    ±39s |            ±2s |                   *(±7s)* |    0s |
-| yarn4 no compression    |    ±31s |            ±3s |                  *(±11s)* |    0s |
-| pnpm7                   |    ±19s |            ±8s |                  *(±18s)* |    1s |
+| yarn4 mixed compression |    ±39s |            ±2s |                   *(±9s)* |    0s |
+| yarn4 no compression    |    ±31s |            ±3s |                   *(±6s)* |    0s |
+| pnpm7                   |    ±19s |            ±8s |                  *(±29s)* |    1s |
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes.

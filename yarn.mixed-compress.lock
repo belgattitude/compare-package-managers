@@ -8526,8 +8526,8 @@ __metadata:
   linkType: hard
 
 "@vanilla-extract/integration@npm:^6.0.2":
-  version: 6.1.1
-  resolution: "@vanilla-extract/integration@npm:6.1.1"
+  version: 6.1.2
+  resolution: "@vanilla-extract/integration@npm:6.1.2"
   dependencies:
     "@babel/core": "npm:^7.20.7"
     "@babel/plugin-syntax-typescript": "npm:^7.20.0"
@@ -8540,7 +8540,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     mlly: "npm:^1.1.0"
     outdent: "npm:^0.8.0"
-  checksum: de57bcf46c4cc62782b8b3cab95c4bf2597ab00e697cb5afb4a4ec673a1298e6434e7f525fdd50ca230f224f52533591a9d4ea931b524282253e32118c94eef0
+  checksum: d4047a2e5f488438ebe1b8a4971576427e69be0ec238ecd2e083c036c5058008392eab19b69d1e4e3fcf39a431471cb39cbe271cfc3ccd7e7699efba0fdba448
   languageName: node
   linkType: hard
 

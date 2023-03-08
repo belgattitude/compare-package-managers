@@ -13,14 +13,14 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 On this example repo **with cache** 
 
-- PNPM 7.28.0 - 27s (lock file v6 / deduped)
-- Yarn 4.0.0-rc.39 - 34s (linker: node_modules, supportedArchitecture: current, compressionLevel: 0)
+- PNPM 7.29.1 - 27s (deduped + use-lockfile-v6 / dedupe-peer-dependents / resolve-peers-from-workspace-root)
+- Yarn 4.0.0-rc.40 - 34s (linker: node_modules, supportedArchitecture: current, compressionLevel: 0)
 
 | CI Scenario             | Install | CI fetch cache | CI persist (lock changes) | Setup | 
 |-------------------------|--------:|---------------:|--------------------------:|------:|
-| yarn4 mixed compression |    ±39s |            ±2s |                   *(±7s)* |    0s |
-| yarn4 no compression    |    ±31s |            ±3s |                  *(±11s)* |    0s |
-| pnpm7                   |    ±19s |            ±8s |                  *(±18s)* |    1s |
+| yarn4 mixed compression |    ±39s |            ±2s |                   *(±9s)* |    0s |
+| yarn4 no compression    |    ±31s |            ±3s |                   *(±6s)* |    0s |
+| pnpm7                   |    ±19s |            ±8s |                  *(±29s)* |    1s |
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes.

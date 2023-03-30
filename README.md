@@ -30,7 +30,7 @@ On this example repo **with cache**
 Globally very close to each other when considering that yarn preserve cache across lock changes. 
 
 **Caution** PNPM does not have an equivalent of supportedArchitectures. In other words docker, vercel,
-cache sizes are bigger when using native binaries (swc,esbuild...).  
+cache sizes are bigger when using native binaries (swc,esbuild...). In lambdas it can lead to slow startup times too. 
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 

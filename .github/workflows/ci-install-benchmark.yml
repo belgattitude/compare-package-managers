@@ -52,7 +52,7 @@ jobs:
       - name: ⚙ Install pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7.29.1
+          version: 8.1.0
 
       - name: ⚙ Expose pnpm config(s) through "$GITHUB_OUTPUT"
         id: pnpm-config
@@ -84,7 +84,7 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@3.0.1 "**/node_modules"
+        run: npx -y rimraf@latest --glob "**/node_modules"
 
       - name: 📥 Yarn install dependencies (no-compress)
         run: yarn install --immutable --inline-builds
@@ -100,8 +100,8 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
-      # - name: 🧹 Remove node_modules
-      #  run: npx -y rimraf@3.0.1 "**/node_modules"
+      #- name: 🧹 Remove node_modules
+      #  run: npx -y rimraf@latest --glob "**/node_modules"
       #- name: 📥 Yarn PNP install
       #  run: yarn install --immutable --inline-builds
       #  env:
@@ -114,11 +114,8 @@ jobs:
       #    HUSKY: '0'
       #    PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
-      # - name: 🧹 Remove node_modules
-      #   run: npx -y rimraf "**/node_modules"
-
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@3.0.1 "**/node_modules"
+        run: npx -y rimraf@latest --glob "**/node_modules"
 
       - name: 📥 Yarn install no-cache (mixed-compress)
         run: yarn install --immutable --inline-builds
@@ -135,7 +132,7 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@3.0.1 "**/node_modules"
+        run: npx -y rimraf@latest --glob "**/node_modules"
 
       - name: 📥 Yarn install no-cache (no-compress)
         run: yarn install --immutable --inline-builds
@@ -152,7 +149,7 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@3.0.1 "**/node_modules"
+        run: npx -y rimraf@latest --glob "**/node_modules"
 
       - name: 📥 PNPM install
         shell: bash
@@ -163,7 +160,7 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@3.0.1 "**/node_modules"
+        run: npx -y rimraf@latest --glob "**/node_modules"
 
       - name: 📥 PNPM install no-cache
         shell: bash
@@ -174,7 +171,7 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@3.0.1 "**/node_modules"
+        run: npx -y rimraf@latest --glob "**/node_modules"
 
       # NPM does not support workspace:^ protocol
       #- name: Install NPM

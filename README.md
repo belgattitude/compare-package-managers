@@ -13,7 +13,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 On this example repo **with cache** 
 
-- PNPM 7.29.1 - 27s (deduped + use-lockfile-v6 / dedupe-peer-dependents / resolve-peers-from-workspace-root)
+- PNPM 8.1.0 - 27s (deduped + use-lockfile-v6 / dedupe-peer-dependents / resolve-peers-from-workspace-root)
 - Yarn 4.0.0-rc.40 - 38s (linker: node_modules, supportedArchitecture: current, compressionLevel: 0)
 
 | CI Scenario             | Install | CI fetch cache | CI persist (lock changes) | Setup | 
@@ -56,7 +56,7 @@ experience pnpm is sometimes harder to work with (ie prisma)
 ### Technicalities
 
 - [Yarn 4.0.0-rc.40](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 7.29.1](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Pnpm 8.1.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 

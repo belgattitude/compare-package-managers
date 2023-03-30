@@ -5,12 +5,23 @@ import { defineConfig } from 'vitest/config';
 const testFiles = ['./src/**/*.test.{js,jsx,ts,tsx}'];
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [
+    tsconfigPaths(),
+    react({
+      // fastRefresh: false,
+    }),
+  ],
   test: {
     globals: true,
     environment: 'happy-dom',
     setupFiles: './config/test/setupVitest.ts',
     passWithNoTests: true,
+    /*
+    deps: {
+      experimentalOptimizer: {
+        enabled: true,
+      },
+    }, */
     cache: {
       dir: '../../.cache/vitest/core-lib',
     },
@@ -18,6 +29,7 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'clover'],
       extension: ['js', 'jsx', 'ts', 'tsx'],
+      all: true,
     },
     // To mimic Jest behaviour regarding mocks.
     // @link https://vitest.dev/config/#clearmocks

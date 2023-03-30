@@ -13,22 +13,28 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 On this example repo **with cache** 
 
-- PNPM 8.1.0 - 27s (deduped + use-lockfile-v6 / dedupe-peer-dependents / resolve-peers-from-workspace-root)
-- Yarn 4.0.0-rc.40 - 38s (linker: node_modules, supportedArchitecture: current, compressionLevel: 0)
+- PNPM 8.1.0 
+  - 27s (dedupe-peer-dependents / resolve-peers-from-workspace-root)
+- Yarn 4.0.0-rc.42 (linker: node_modules, supportedArchitecture: current)
+  - 45s (mixed compression)
+  - 38s (no-compress)
 
-| CI Scenario             | Install | CI fetch cache | CI persist (lock changes) | Setup | 
-|-------------------------|--------:|---------------:|--------------------------:|------:|
-| yarn4 mixed compression |    ±42s |            ±4s |                   *(±9s)* |    0s |
-| yarn4 no compression    |    ±34s |            ±4s |                   *(±6s)* |    0s |
-| pnpm7                   |    ±19s |            ±8s |                  *(±29s)* |    1s |
+  
+| CI Scenario             | Install | CI fetch cache | CI persist cache | Setup | 
+|-------------------------|--------:|---------------:|-----------------:|------:|
+| yarn4 mixed-compression |    ±42s |            ±3s |          *(±9s)* |    0s |
+| yarn4 no compression    |    ±34s |            ±4s |          *(±6s)* |    0s |
+| pnpm8                   |    ±19s |            ±8s |         *(±29s)* |    2s |
 
 
-Globally very close to each other when considering that yarn preserve cache across lock changes.
+Globally very close to each other when considering that yarn preserve cache across lock changes. 
+
+**Caution** PNPM does not have an equivalent of supportedArchitectures. In other words docker, vercel,
+cache sizes are bigger when using native binaries (swc,esbuild...).  
 
 See the action in [.github/workflows/ci-install-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-install-benchmark.yml)
 and the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-install-benchmark.yml). 
-
-That said if you're deploying on vercel, hacks are needed to preserve the yarn cache on lock changes. 
+ 
 
 #### ⏩ Nextjs build speed and lambda size
 
@@ -55,7 +61,7 @@ experience pnpm is sometimes harder to work with (ie prisma)
 
 ### Technicalities
 
-- [Yarn 4.0.0-rc.40](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
+- [Yarn 4.0.0-rc.42](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
 - [Pnpm 8.1.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
@@ -101,9 +107,9 @@ See results in [actions](https://github.com/belgattitude/compare-package-manager
 
 | CI Scenario             | Install | CI fetch cache | CI persist cache | Setup | 
 |-------------------------|--------:|---------------:|-----------------:|------:|
-| yarn4 mixed-compression |    ±49s |            ±5s |          *(±6s)* |    0s |
-| yarn4 no compression    |    ±39s |            ±3s |          *(±9s)* |    0s |
-| pnpm7                   |    ±21s |           ±10s |         *(±16s)* |    2s |
+| yarn4 mixed-compression |    ±42s |            ±3s |          *(±6s)* |    0s |
+| yarn4 no compression    |    ±34s |            ±4s |          *(±9s)* |    0s |
+| pnpm8                   |    ±19s |            ±8s |         *(±16s)* |    2s |
 
 
 The CI fetch cache (time taken for the github action to load and extract the cache archive) 
@@ -114,11 +120,11 @@ differences happens can be explained by:
 - When yarn use mixed-compression the internal github zstd don't compress the yarn zip archives.   
 
 
-Thus: pnpm (21+10+2) = 33s vs yarn no-comp (39+3+0) = 41s.
+Thus: pnpm (19+8+2) = 29s vs yarn no-comp (34+4+0) = 38s.
 
-https://github.com/belgattitude/compare-package-managers/actions/runs/3977311379/jobs/6818357285
+https://github.com/belgattitude/compare-package-managers/actions/runs/4565624343/jobs/8057000146
 
-![img.png](img.png)
+![image](https://user-images.githubusercontent.com/259798/228883737-9d79ee5d-2130-4db3-a38d-522b57cb2f91.png)
 
 
 

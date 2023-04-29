@@ -8,6 +8,7 @@ import { withSentryConfig } from '@sentry/nextjs'; // https://docs.sentry.io/pla
 import { createSecureHeaders } from 'next-secure-headers';
 import pc from 'picocolors';
 import nextI18nConfig from './next-i18next.config.mjs';
+import { validatedServerEnv } from './src/config/validated-server-env.mjs';
 
 // @ts-ignore
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
@@ -339,6 +340,7 @@ const nextConfig = {
 let config = nextConfig;
 
 if (!NEXTJS_DISABLE_SENTRY) {
+  // @ts-ignore cause sentry is not always following nextjs types
   config = withSentryConfig(config, {
     // Additional config options for the Sentry Webpack plugin. Keep in mind that
     // the following options are set automatically, and overriding them is not

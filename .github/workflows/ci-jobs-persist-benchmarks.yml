@@ -1,0 +1,47 @@
+name: CI-jobs-persist
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  install-yarn:
+    runs-on: ubuntu-latest
+    env:
+      YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: 📥 Monorepo yarn install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true
+
+
+  install-yarn-second-time:
+    needs: install-yarn
+    runs-on: ubuntu-latest
+    env:
+      YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: 📥 Monorepo yarn install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true

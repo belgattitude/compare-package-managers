@@ -170,16 +170,3 @@ jobs:
           PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf@latest --glob "**/node_modules"
-
-      # NPM does not support workspace:^ protocol
-      #- name: Install NPM
-      #  run: npm i -g npm@8.19.2
-
-      #- name: NPM install no-cache
-      #  shell: bash
-      #  run: npm install --frozen-lockfile
-      #  env:
-      #    HUSKY: '0'
-      #    PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'

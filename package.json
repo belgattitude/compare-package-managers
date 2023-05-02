@@ -61,7 +61,7 @@
     "g:test-unit-jest": "yarn workspaces foreach -ptv run test-unit-jest",
     "g:typecheck": "yarn workspaces foreach -ptv run typecheck",
     "install:playwright": "playwright install",
-    "nuke:node_modules": "npx rimraf@3.0.1 '**/node_modules'",
+    "nuke:node_modules": "rimraf --glob '**/node_modules'",
     "packages:build": "yarn workspaces foreach -ptv --include '@your-org/*' run build",
     "packages:clean": "yarn workspaces foreach -ptv --include '@your-org/*' run clean",
     "packages:lint": "yarn workspaces foreach -ptv --include '@your-org/*' run lint",
@@ -74,32 +74,26 @@
   "devDependencies": {
     "@changesets/changelog-github": "0.4.8",
     "@changesets/cli": "2.26.1",
-    "@commitlint/cli": "17.5.1",
-    "@commitlint/config-conventional": "17.4.4",
+    "@commitlint/cli": "17.6.1",
+    "@commitlint/config-conventional": "17.6.1",
     "@types/prettier": "2.7.2",
     "@types/shell-quote": "1.7.1",
     "@your-org/eslint-config-bases": "workspace:^",
-    "eslint": "8.37.0",
+    "eslint": "8.39.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
-    "lint-staged": "13.2.0",
+    "lint-staged": "13.2.2",
     "npm-run-all": "4.1.5",
-    "prettier": "2.8.7",
-    "rimraf": "4.4.1",
-    "shell-quote": "1.8.0",
-    "syncpack": "9.8.4",
-    "typescript": "5.0.2"
+    "prettier": "2.8.8",
+    "rimraf": "5.0.0",
+    "shell-quote": "1.8.1",
+    "syncpack": "9.8.6",
+    "typescript": "5.0.4"
   },
   "engines": {
     "node": "^14.18.3 || >=16.13.0",
     "yarn": ">=1.22.0",
     "npm": "please-use-yarn"
-  },
-  "resolutions": {
-    "@graphql-inspector/core": "3.3.0"
-  },
-  "resolutions?": {
-    "@graphql-inspector/core": "https://github.com/kamilkisiela/graphql-inspector/issues/2175"
   },
   "workspaces": [
     "apps/*",

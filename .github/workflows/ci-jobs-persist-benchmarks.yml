@@ -10,7 +10,7 @@ jobs:
   install-yarn:
     runs-on: ubuntu-latest
     env:
-      YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
+      YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
     steps:
       - uses: actions/checkout@v3
 

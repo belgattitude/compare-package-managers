@@ -14,7 +14,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 #### 📥 Install speed 
 
-Measured through github actions. See [.github/workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml).
+Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml).
 
 - PNPM 8.5.1, see [.npmrc](./.npmrc) - best: 27s (17+10 for cache)
 - Yarn 4.0.0-rc.44, see [.yarnrc.yml](./.yarnrc.yml) - best: 32s (26+6 for cache with compressionLevel:0)

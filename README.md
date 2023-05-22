@@ -1,30 +1,39 @@
 ## Compare package managers
 
-Benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) already exists. 
-
+Benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) already exists.
 Let's test the differences based on [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example)
 for fun with GH CI first approach (ubuntu). 
 
 Potential for co2 emissions reductions at install, build and runtime (♻️🌳❤️) ?
 
-### TLDR;
+> See also 2 interesting gists to help you set up caches on github
+> - yarn 4 - https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a
+> - pnpm 8 - https://gist.github.com/belgattitude/838b2eba30c324f1f0033a797bab2e31
+
+
 
 #### 📥 Install speed 
 
-On this example repo **with cache** 
+Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml).
 
-- PNPM 8.4.0 
-  - 27s (dedupe-peer-dependents / resolve-peers-from-workspace-root)
-- Yarn 4.0.0-rc.43 (linker: node_modules, supportedArchitecture: current)
-  - 45s (mixed compression)
-  - 38s (no-compress)
+- PNPM 8.5.1, see [.npmrc](./.npmrc) - best: 27s (17+10 for cache)
+- Yarn 4.0.0-rc.44, see [.yarnrc.yml](./.yarnrc.yml) - best: 32s (26+6 for cache with compressionLevel:0)
 
-  
-| CI Scenario             | Install | CI fetch cache | CI persist cache | Setup | 
-|-------------------------|--------:|---------------:|-----------------:|------:|
-| yarn4 mixed-compression |    ±42s |            ±3s |          *(±9s)* |    0s |
-| yarn4 no compression    |    ±34s |            ±4s |          *(±6s)* |    0s |
-| pnpm8                   |    ±19s |            ±8s |         *(±29s)* |    2s |
+**With cache**
+
+| CI Scenario             | Install | CI fetch cache | Cache size | CI persist cache |
+|-------------------------|--------:|---------------:|-----------:|-----------------:|
+| yarn4 mixed-compression |    ±31s |            ±4s |      201Mb |          *(±5s)* |
+| yarn4 no compression    |    ±26s |            ±6s |      155Mb |          *(±8s)* |
+| pnpm8                   |    ±17s |           ±10s |      253Mb |         *(±30s)* |
+
+**Without cache**
+
+| CI Scenario                        | Install | Diff with cached run | 
+|------------------------------------|--------:|---------------------:|
+| yarn4 mixed-compression / no cache |    ±79s |      slower than 35s |
+| yarn4 no compression / no cache    |    ±46s |      slower than 32s |
+| pnpm8 / no cache                   |    ±50s |      slower than 27s | 
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes. 
@@ -67,8 +76,8 @@ experience pnpm is sometimes harder to work with (ie prisma)
 
 ### Technicalities
 
-- [Yarn 4.0.0-rc.43](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 8.4.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Yarn 4.0.0-rc.44](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
+- [Pnpm 8.5.1](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 
@@ -164,11 +173,11 @@ comparison. Confirmed by gdu and action cache:
 
 **Warning** the fetch/persist times varies a lot between runs.
 
-| CI Scenario              | Fetch cache | Persist cache |  Size | 
-|--------------------------|------------:|--------------:|------:|
-| yarn4 mixed-compression  |         ±5s |           ±6s | 220MB |
-| yarn4 no compression     |         ±8s |           ±9s | 180MB |
-| pnpm7                    |        ±14s |          ±16s | 273MB |
+| CI Scenario             | Fetch cache | Persist cache |  Size | 
+|-------------------------|------------:|--------------:|------:|
+| yarn4 mixed-compression |         ±5s |           ±5s | 201MB |
+| yarn4 no compression    |         ±8s |           ±8s | 155MB |
+| pnpm8                   |        ±14s |          ±30s | 253MB |
 
 When already compressed the yarn cache is stored faster in the github cache. Make sense as action/cache won't 
 try to compress something already compressed. On the pnpm side saving the pnpm-store is much slower, this is due

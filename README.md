@@ -17,7 +17,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml).
 
 - PNPM 8.5.1, see [.npmrc](./.npmrc) - best: 27s (17+10 for cache)
-- Yarn 4.0.0-rc.44, see [.yarnrc.yml](./.yarnrc.yml) - best: 32s (26+6 for cache with compressionLevel:0)
+- Yarn 4.0.0-rc.44 / nmLinker, see [.yarnrc.yml](./.yarnrc.yml) - best: 32s (26+6 for cache with compressionLevel:0)
 
 **With cache**
 
@@ -31,9 +31,9 @@ Measured through github actions. See [workflows/ci-install-benchmark.yml](./.git
 
 | CI Scenario                        | Install | Diff with cached run | 
 |------------------------------------|--------:|---------------------:|
-| yarn4 mixed-compression / no cache |    ±79s |      slower than 35s |
-| yarn4 no compression / no cache    |    ±46s |      slower than 32s |
-| pnpm8 / no cache                   |    ±50s |      slower than 27s | 
+| yarn4 mixed-compression / no cache |   ±110s |      slower than 35s |
+| yarn4 no compression / no cache    |    ±60s |      slower than 32s |
+| pnpm8 / no cache                   |    ±80s |      slower than 27s | 
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes. 

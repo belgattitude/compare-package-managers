@@ -14,26 +14,26 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 #### 📥 Install speed 
 
-Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml).
+Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml) and [latest run](https://github.com/belgattitude/compare-package-managers/actions/runs/5050181711/jobs/9060564115)
 
-- PNPM 8.5.1, see [.npmrc](./.npmrc) - best: 27s (17+10 for cache)
-- Yarn 4.0.0-rc.44 / nmLinker, see [.yarnrc.yml](./.yarnrc.yml) - best: 32s (26+6 for cache with compressionLevel:0)
+- PNPM 8.5.1, see [.npmrc](./.npmrc) - best: **39s**  => 23s + 16s (for cache fetch / decompress)
+- Yarn 4.0.0-rc.44 / nmLinker, see [.yarnrc.yml](./.yarnrc.yml) - best: **45s** (39s+16s with compressionLevel:0)
 
 **With cache**
 
-| CI Scenario             | Install | CI fetch cache | Cache size | CI persist cache |
-|-------------------------|--------:|---------------:|-----------:|-----------------:|
-| yarn4 mixed-compression |    ±31s |            ±4s |      201Mb |          *(±5s)* |
-| yarn4 no compression    |    ±26s |            ±6s |      155Mb |          *(±8s)* |
-| pnpm8                   |    ±17s |           ±10s |      253Mb |         *(±30s)* |
+| CI Scenario             | Install | CI fetch cache | Total | Cache size | CI persist cache |
+|-------------------------|--------:|---------------:|------:|-----------:|-----------------:|
+| yarn4 mixed-compression |    ±51s |            ±4s |   **55s** |      201Mb |          *(±5s)* |
+| yarn4 no compression    |    ±39s |            ±6s |   **45s** |      155Mb |          *(±8s)* |
+| pnpm8.5.1               |    ±23s |           ±16s |   **39s** |      253Mb |         *(±30s)* |
 
 **Without cache**
 
 | CI Scenario                        | Install | Diff with cached run | 
 |------------------------------------|--------:|---------------------:|
-| yarn4 mixed-compression / no cache |   ±110s |      slower than 35s |
-| yarn4 no compression / no cache    |    ±60s |      slower than 32s |
-| pnpm8 / no cache                   |    ±80s |      slower than 27s | 
+| yarn4 mixed-compression / no cache |   ±110s |      slower than 55s |
+| yarn4 no compression / no cache    |    ±63s |      slower than 45s |
+| pnpm8 / no cache                   |    ±80s |      slower than 39s | 
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes. 

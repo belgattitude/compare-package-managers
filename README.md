@@ -22,9 +22,9 @@ On this example repo **with cache**
   
 | CI Scenario             | Install | CI fetch cache | CI persist cache | Setup | 
 |-------------------------|--------:|---------------:|-----------------:|------:|
-| yarn4 mixed-compression |    ±42s |            ±3s |          *(±9s)* |    0s |
-| yarn4 no compression    |    ±34s |            ±4s |          *(±6s)* |    0s |
-| pnpm8                   |    ±19s |            ±8s |         *(±29s)* |    2s |
+| yarn4 mixed-compression |    ±42s |            ±3s |          *(±5s)* |    0s |
+| yarn4 no compression    |    ±34s |            ±4s |          *(±8s)* |    0s |
+| pnpm8                   |    ±19s |            ±8s |         *(±30s)* |    1s |
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes. 
@@ -164,11 +164,11 @@ comparison. Confirmed by gdu and action cache:
 
 **Warning** the fetch/persist times varies a lot between runs.
 
-| CI Scenario              | Fetch cache | Persist cache |  Size | 
-|--------------------------|------------:|--------------:|------:|
-| yarn4 mixed-compression  |         ±5s |           ±6s | 220MB |
-| yarn4 no compression     |         ±8s |           ±9s | 180MB |
-| pnpm7                    |        ±14s |          ±16s | 273MB |
+| CI Scenario             | Fetch cache | Persist cache |  Size | 
+|-------------------------|------------:|--------------:|------:|
+| yarn4 mixed-compression |         ±5s |           ±5s | 201MB |
+| yarn4 no compression    |         ±8s |           ±8s | 155MB |
+| pnpm8                   |        ±14s |          ±30s | 253MB |
 
 When already compressed the yarn cache is stored faster in the github cache. Make sense as action/cache won't 
 try to compress something already compressed. On the pnpm side saving the pnpm-store is much slower, this is due

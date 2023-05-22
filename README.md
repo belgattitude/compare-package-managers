@@ -7,24 +7,28 @@ for fun with GH CI first approach (ubuntu).
 
 Potential for co2 emissions reductions at install, build and runtime (♻️🌳❤️) ?
 
-### TLDR;
+
 
 #### 📥 Install speed 
 
-On this example repo **with cache** 
+- PNPM 8.5.1, see [.npmrc](./.npmrc) - best: 27s (17+10 for cache)
+- Yarn 4.0.0-rc.44, see [.yarnrc.yml](./.yarnrc.yml) - best: 32s (26+6 for cache with compressionLevel:0)
 
-- PNPM 8.5.1
-  - 27s (dedupe-peer-dependents / resolve-peers-from-workspace-root)
-- Yarn 4.0.0-rc.44 (linker: node_modules, supportedArchitecture: current)
-  - 45s (mixed compression)
-  - 38s (no-compress)
+**With cache**
 
-  
-| CI Scenario             | Install | CI fetch cache | CI persist cache | Setup | 
-|-------------------------|--------:|---------------:|-----------------:|------:|
-| yarn4 mixed-compression |    ±42s |            ±3s |          *(±5s)* |    0s |
-| yarn4 no compression    |    ±34s |            ±4s |          *(±8s)* |    0s |
-| pnpm8                   |    ±19s |            ±8s |         *(±30s)* |    1s |
+| CI Scenario             | Install | CI fetch cache | CI persist cache | Cache size | 
+|-------------------------|--------:|---------------:|-----------------:|-----------:|
+| yarn4 mixed-compression |    ±31s |            ±4s |          *(±5s)* |      201Mb |
+| yarn4 no compression    |    ±26s |            ±6s |          *(±8s)* |      155Mb |
+| pnpm8                   |    ±17s |           ±10s |         *(±30s)* |      253Mb |
+
+**Without cache**
+
+| CI Scenario                        | Install |  
+|------------------------------------|--------:|
+| yarn4 mixed-compression / no cache |    ±79s |
+| yarn4 no compression / no cache    |    ±46s |
+| pnpm8 / no cache                   |    ±50s |
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes. 

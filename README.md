@@ -21,11 +21,11 @@ Measured through github actions. See [workflows/ci-install-benchmark.yml](./.git
 
 **With cache**
 
-| CI Scenario             | Install | CI fetch cache  | Cache size | CI persist cache |
+| CI Scenario             | Install | CI fetch cache | Cache size | CI persist cache |
 |-------------------------|--------:|---------------:|-----------:|-----------------:|
-| yarn4 mixed-compression |    ±31s |            ±4s |      201Mb | *(±5s)* |
-| yarn4 no compression    |    ±26s |            ±6s |      155Mb | *(±8s)* |
-| pnpm8                   |    ±17s |           ±10s |      253Mb |*(±30s)* |
+| yarn4 mixed-compression |    ±31s |            ±4s |      201Mb |          *(±5s)* |
+| yarn4 no compression    |    ±26s |            ±6s |      155Mb |          *(±8s)* |
+| pnpm8                   |    ±17s |           ±10s |      253Mb |         *(±30s)* |
 
 **Without cache**
 

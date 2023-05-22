@@ -1,11 +1,14 @@
 ## Compare package managers
 
-Benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) already exists. 
-
+Benchs from [pnpm](https://pnpm.io/benchmarks) and [yarn 3+](https://yarnpkg.com/benchmarks) already exists.
 Let's test the differences based on [nextjs-monorepo-example](https://github.com/belgattitude/nextjs-monorepo-example)
 for fun with GH CI first approach (ubuntu). 
 
 Potential for co2 emissions reductions at install, build and runtime (♻️🌳❤️) ?
+
+> See also 2 interesting gists to help you set up caches on github
+> - yarn 4 - https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a
+> - pnpm 8 - https://gist.github.com/belgattitude/838b2eba30c324f1f0033a797bab2e31
 
 
 
@@ -16,19 +19,19 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 **With cache**
 
-| CI Scenario             | Install | CI fetch cache | CI persist cache | Cache size | 
-|-------------------------|--------:|---------------:|-----------------:|-----------:|
-| yarn4 mixed-compression |    ±31s |            ±4s |          *(±5s)* |      201Mb |
-| yarn4 no compression    |    ±26s |            ±6s |          *(±8s)* |      155Mb |
-| pnpm8                   |    ±17s |           ±10s |         *(±30s)* |      253Mb |
+| CI Scenario             | Install | CI fetch cache  | Cache size | CI persist cache |
+|-------------------------|--------:|---------------:|-----------:|-----------------:|
+| yarn4 mixed-compression |    ±31s |            ±4s |      201Mb | *(±5s)* |
+| yarn4 no compression    |    ±26s |            ±6s |      155Mb | *(±8s)* |
+| pnpm8                   |    ±17s |           ±10s |      253Mb |*(±30s)* |
 
 **Without cache**
 
-| CI Scenario                        | Install |  
-|------------------------------------|--------:|
-| yarn4 mixed-compression / no cache |    ±79s |
-| yarn4 no compression / no cache    |    ±46s |
-| pnpm8 / no cache                   |    ±50s |
+| CI Scenario                        | Install | Diff with cached run | 
+|------------------------------------|--------:|---------------------:|
+| yarn4 mixed-compression / no cache |    ±79s |      slower than 35s |
+| yarn4 no compression / no cache    |    ±46s |      slower than 32s |
+| pnpm8 / no cache                   |    ±50s |      slower than 27s | 
 
 
 Globally very close to each other when considering that yarn preserve cache across lock changes. 

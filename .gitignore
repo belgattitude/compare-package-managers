@@ -12,6 +12,9 @@
 
 **/.turbo
 
+
+/.pnpm
+
 # dependencies
 node_modules
 .yarn/*

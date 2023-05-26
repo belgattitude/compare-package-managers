@@ -200,22 +200,93 @@ that regarding cache yarn has an advantage: it does not need to be recreated for
 Use [hyperfine](https://github.com/sharkdp/hyperfine) and [taskset](https://man7.org/linux/man-pages/man1/taskset.1.html) 
 to mimic ci two-cores speed.
 
-| Command | Mean [s] | Min [s] | Max [s] | Relative |
-|:---|---:|---:|---:|---:|
-| `taskset -c 0 npm run install:yarn-mixed-comp:cache` | 46.963 ± 0.938 | 46.052 | 47.926 | 2.46 ± 0.05 |
-| `taskset -c 0 npm run install:yarn-no-comp:cache` | 37.743 ± 0.277 | 37.424 | 37.926 | 1.98 ± 0.02 |
-| `taskset -c 0 npm run install:pnpm:cache` | 19.085 ± 0.037 | 19.045 | 19.118 | 1.00 |
+
+### Compare pnpm / yarn
+
+> **Warning** this is native speed with cache, but it does not take into account the cache persistence
+> on a CI. 
+> 
+> Yarn has a much lower overhead on @action/cache than pnpm 
+> - fetch/persist - less and smaller files to compress: 
+>      - yarn cache =  2.234 zip files (mixed compression = 227Mb, no compress = 769Mb)
+>      - pnpm store = 62.958 files/links (1.1Gb) 
+> - it won't grow overtime (lock changes affects only a bit). automatically pruned
+> - with pnpm there's a lot of chances to reach your cache max budget (more keys on main)
+> in other words: cost/benefit balance (refer to ci measurements).
+> 
+> Also note that pnpm even with cache will still download some archives (nextjs, turbo,...) and seems to be more sensitive to npm outages.
+> 
+> On CI yarn compress:off will be faster, I tested on high end i7 with 2 cores but the zip compression
+> overhead exists on lower end machines
+
+```bash 
+
+| Command                             |       Mean [s] | Min [s] | Max [s] | Relative |
+|:------------------------------------|---------------:|--------:|--------:|---:|
+| `yarn cache:on yarn compress:mixed` | 21.300 ± 0.169 |  21.173 |  21.492 | 1.99 ± 0.03 |
+| `yarn cache:on yarn compress:off`   | 22.759 ± 0.115 |  22.630 |  22.851 | 2.12 ± 0.03 |
+| `pnpm cache:on`                     | 10.712 ± 0.126 |  10.611 |  10.853 | 1.00 |
+
+```bash
+# npx -y rimraf@5.0.1 --glob '**/node_modules' .yarn/tmp .pnpm
+
+taskset -c 0,1 hyperfine --runs=3 --export-markdown "docs/bench-pm-with-cache-no-nm.md" --show-output \
+\
+--command-name "yarn cache:on yarn compress:mixed" \
+--prepare "export YARN_CACHE_FOLDER=.yarn/tmp/compress/.cache YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock YARN_INSTALL_STATE_PATH=.yarn/tmp/compress/install-state.gz && yarn install --immutable && npx -y rimraf@5.0.1 --glob '**/node_modules' .yarn/tmp/compress/install-state.gz" \
+"yarn install --immutable" \
+\
+--command-name "yarn cache:on yarn compress:off" \
+--prepare "export YARN_CACHE_FOLDER=.yarn/tmp/no-compress/.cache YARN_COMPRESSION_LEVEL=0 YARN_LOCKFILE_FILENAME=yarn.no-compress.lock YARN_INSTALL_STATE_PATH=.yarn/tmp/no-compress/install-state.gz && yarn install --immutable && npx -y rimraf@5.0.1 --glob '**/node_modules' .yarn/tmp/no-compress/install-state.gz" \
+"yarn install --immutable" \
+\
+--command-name "pnpm cache:on" \
+--prepare "npx -y rimraf@5.0.1 --glob '**/node_modules' .pnpm  && pnpm install --virtual-store-dir .pnpm/virtual --store-dir .pnpm/global --frozen-lockfile --prefer-offline && npx -y rimraf@5.0.1 --glob '**/node_modules' .pnpm/virtual" \
+"pnpm install --virtual-store-dir .pnpm/virtual --store-dir .pnpm/global --frozen-lockfile --prefer-offline"
+
+# npx -y rimraf@5.0.1 --glob '**/node_modules' .pnpm  .yarn/tmp
+
+```
+
+### Compare yarn options
+
+| Command                                    |       Mean [s] | Min [s] | Max [s] |    Relative |
+|:-------------------------------------------|---------------:|--------:|--------:|------------:|
+| `yarnCache:on - installState:on - nm:off`  | 21.350 ± 0.216 |  21.185 |  21.595 | 5.59 ± 0.24 |
+| `yarnCache:on - installState:off - nm:off` | 22.717 ± 0.225 |  22.510 |  22.957 | 5.95 ± 0.25 |
+| `yarnCache:on - installState:off - nm:on`  | 11.676 ± 0.041 |  11.647 |  11.722 | 3.06 ± 0.13 |
+| `yarnCache:on - installState:on - nm:on`   |  3.820 ± 0.156 |   3.645 |   3.946 |        1.00 |
 
 
 ```bash
-hyperfine --runs=3 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
---prepare "npm run install:yarn-mixed-comp; npx -y rimraf@5.0.1 --glob '**/node_modules'" \
-"taskset -c 0,1 npm run install:yarn-mixed-comp:cache" \
---prepare "npm run install:yarn-no-comp; npx -y rimraf@5.0.1 --glob '**/node_modules'" \
-"taskset -c 0,1 npm run install:yarn-no-comp:cache" \
---prepare "npm run install:pnpm:cache; npx -y rimraf@5.0.1 --glob '**/node_modules'" \
-"taskset -c 0,1 npm run install:pnpm:cache" 
+export YARN_CACHE_FOLDER=.yarn/benchmark/cache YARN_COMPRESSION_LEVEL=0 YARN_LOCKFILE_FILENAME=yarn.no-compress.lock;
+
+YARN_INSTALL_STATE_PATH=.yarn/benchmark/install-state.gz yarn install --immutable;
+
+taskset -c 0,1 hyperfine --runs=3 --export-markdown "docs/yarn-bench-various-params.md" \
+--command-name "yarnCache:on - installState:on - nm:off" \
+--prepare "npx -y rimraf@5.0.1 --glob '**/node_modules'" \
+"YARN_INSTALL_STATE_PATH=.yarn/benchmark/install-state.gz yarn install --immutable" \
+--command-name "yarnCache:on - installState:off - nm:off" \
+--prepare "npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/benchmark/install-state.off.gz'" \
+"YARN_INSTALL_STATE_PATH=.yarn/benchmark/install-state.off.gz yarn install --immutable" \
+--command-name "yarnCache:on - installState:off - nm:on" \
+--prepare "npx -y rimraf@5.0.1 --glob '.yarn/benchmark/install-state.off.gz'" \
+"YARN_INSTALL_STATE_PATH=.yarn/benchmark/install-state.off.gz yarn install --immutable" \
+--command-name "yarnCache:on - installState:on - nm:on" \
+--prepare "echo 'all caches'" \
+"YARN_INSTALL_STATE_PATH=.yarn/benchmark/install-state.gz yarn install --immutable" \
+--show-output
 ```
+
+```
+Summary
+  'yarnCache:on - installState:on - nm:on' ran
+    3.06 ± 0.13 times faster than 'yarnCache:on - installState:off - nm:off'
+    5.59 ± 0.24 times faster than 'yarnCache:on - installState:on - nm:off'
+    5.95 ± 0.25 times faster than 'yarnCache:on - installState:off - nm:off'
+```
+
 
 ## Changelog
 

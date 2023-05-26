@@ -21,6 +21,12 @@
   "homepage": "https://github.com/belgattitude/compare-package-managers",
   "repository": "belgattitude/compare-package-managers",
   "scripts": {
+    "install:yarn-no-comp": "YARN_CACHE_FOLDER=.yarn/benchmark-cache/no-compress YARN_COMPRESSION_LEVEL=0 YARN_LOCKFILE_FILENAME=yarn.no-compress.lock yarn install --immutable",
+    "install:yarn-mixed-comp": "YARN_CACHE_FOLDER=.yarn/benchmark-cache/mixed-compress YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock yarn install --immutable",
+    "install:pnpm": "pnpm install --store-dir ./pnpm/.pnpm-global-store --frozen-lockfile --prefer-offline",
+    "install:yarn-no-comp:cache": "rimraf --glob '**/node_modules' && YARN_CACHE_FOLDER=.yarn/benchmark-cache/no-compress YARN_COMPRESSION_LEVEL=0 YARN_LOCKFILE_FILENAME=yarn.no-compress.lock yarn install --immutable",
+    "install:yarn-mixed-comp:cache": "rimraf --glob '**/node_modules' && YARN_CACHE_FOLDER=.yarn/benchmark-cache/mixed-compress YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock yarn install --immutable",
+    "install:pnpm:cache": "rimraf --glob '**/node_modules' && pnpm install --store-dir .yarn/.pnpm-global-store --frozen-lockfile --prefer-offline",
     "apps:build": "yarn workspaces foreach -ptv --include '*-app' run build",
     "apps:clean": "yarn workspaces foreach -ptv --include '*-app' run clean",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1.4 .",

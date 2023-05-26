@@ -198,7 +198,7 @@ that regarding cache yarn has an advantage: it does not need to be recreated for
 ## Want to test locally ?
 
 Use [hyperfine](https://github.com/sharkdp/hyperfine) and [taskset](https://man7.org/linux/man-pages/man1/taskset.1.html) 
-to mimic single-core speed.
+to mimic ci two-cores speed.
 
 | Command | Mean [s] | Min [s] | Max [s] | Relative |
 |:---|---:|---:|---:|---:|
@@ -209,12 +209,12 @@ to mimic single-core speed.
 
 ```bash
 hyperfine --runs=3 --export-markdown "docs/bench-yarn-vs-pnpm-single-core.md" \
---prepare "npm run install:yarn-mixed-comp; npx -y rimraf@3.0.1 '**/node_modules'" \
-"taskset -c 0 npm run install:yarn-mixed-comp:cache" \
---prepare "npm run install:yarn-no-comp; npx -y rimraf@3.0.1 '**/node_modules'" \
-"taskset -c 0 npm run install:yarn-no-comp:cache" \
---prepare "npm run install:pnpm:cache; npx -y rimraf@3.0.1 '**/node_modules'" \
-"taskset -c 0 npm run install:pnpm:cache" 
+--prepare "npm run install:yarn-mixed-comp; npx -y rimraf@5.0.1 --glob '**/node_modules'" \
+"taskset -c 0,1 npm run install:yarn-mixed-comp:cache" \
+--prepare "npm run install:yarn-no-comp; npx -y rimraf@5.0.1 --glob '**/node_modules'" \
+"taskset -c 0,1 npm run install:yarn-no-comp:cache" \
+--prepare "npm run install:pnpm:cache; npx -y rimraf@5.0.1 --glob '**/node_modules'" \
+"taskset -c 0,1 npm run install:pnpm:cache" 
 ```
 
 ## Changelog

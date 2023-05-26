@@ -219,7 +219,6 @@ to mimic ci two-cores speed.
 > On CI yarn compress:off will be faster, I tested on high end i7 with 2 cores but the zip compression
 > overhead exists on lower end machines
 
-```bash 
 
 | Command                             |       Mean [s] | Min [s] | Max [s] | Relative |
 |:------------------------------------|---------------:|--------:|--------:|---:|

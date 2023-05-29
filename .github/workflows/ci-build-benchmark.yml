@@ -8,6 +8,9 @@ jobs:
         node-version: [18.x]
     env:
       YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
+      YARN_COMPRESSION_LEVEL: '0'
+      PRISMA_SKIP_POSTINSTALL_GENERATE: 'false'
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
     steps:
       - uses: actions/checkout@v3

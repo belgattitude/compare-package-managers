@@ -157,6 +157,6 @@ jobs:
           YARN_NODE_LINKER: 'pnp'
           YARN_NM_MODE: 'hardlinks-local'
           YARN_CACHE_FOLDER: '.yarn/benchmark-pnp-cache/no-compress'
-          YARN_LOCKFILE_FILENAME: 'yarn.pnpm.lock'
+          YARN_LOCKFILE_FILENAME: 'yarn.pnp.lock'
           YARN_COMPRESSION_LEVEL: '0'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-pnp-no-compress.gz

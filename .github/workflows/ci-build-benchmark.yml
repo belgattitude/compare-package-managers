@@ -9,7 +9,7 @@ jobs:
     env:
       YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
       YARN_COMPRESSION_LEVEL: '0'
-      PRISMA_SKIP_POSTINSTALL_GENERATE: 'false'
+      PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
     steps:

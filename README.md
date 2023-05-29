@@ -15,8 +15,9 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml) and [latest run](https://github.com/belgattitude/compare-package-managers/actions/runs/5092812836/jobs/9154654118)
 
-- PNPM 8.5.1, see [.npmrc](./.npmrc) - best: **25s**  => 16s + 9s (for cache fetch / decompress)
-- Yarn 4.0.0-rc.44 / nmLinker, see [.yarnrc.yml](./.yarnrc.yml) - best: **28s** (26s+2s with compressionLevel:0)
+- PNPM 8.5.1 - best: **25s**  => 16s + 9s (for cache fetch / decompress), see [.npmrc](./.npmrc)
+- Yarn 4.0.0-rc.44 / nmLinker  - best: **28s** (26s+2s with compressionLevel:0), see [.yarnrc.yml](./.yarnrc.yml)
+- Yarn 4.0.0-rc.44 / nmLinker  - best: **37s** (34s+3s with compressionLevel:mixed), see [.yarnrc.yml](./.yarnrc.yml)
 
 **With cache**
 

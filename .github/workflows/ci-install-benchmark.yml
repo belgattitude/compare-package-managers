@@ -2,7 +2,7 @@
 name: 'Install benchmarks'
 on: [push]
 jobs:
-  bench:
+  install-bench:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,15 +28,6 @@ jobs:
           key: yarn-benchmark-cache-no-compress-${{ hashFiles('yarn.no-compress.lock') }}
           restore-keys: |
             yarn-benchmark-cache-no-compress
-
-      #- name: ♻ Setup yarn pnp cache (no-compress)
-      #  uses: actions/cache@v3
-      #  id: yarn-pnp-benchmark-cache-no-compress
-      #  with:
-      #    path: ./.yarn/benchmark-pnp-cache/no-compress
-      #    key: yarn-pnp-benchmark-cache-no-compress-${{ hashFiles('yarn.pnp.lock', '.pnp*') }}
-      #    restore-keys: |
-      #      yarn-pnp-benchmark-cache-no-compress
 
       - name: ♻ Setup yarn cache (mixed-compress)
         uses: actions/cache@v3
@@ -79,7 +70,6 @@ jobs:
         env:
           YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
           YARN_NM_MODE: 'hardlinks-local'
-          YARN_GLOBAL_FOLDER: '.yarn/global-mixed-compress/'
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/mixed-compress'
           YARN_COMPRESSION_LEVEL: 'mixed'
           YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
@@ -93,7 +83,6 @@ jobs:
         env:
           YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
           YARN_NM_MODE: 'hardlinks-local'
-          YARN_GLOBAL_FOLDER: '.yarn/global-no-compress/'
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-compress'
           YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
           YARN_COMPRESSION_LEVEL: '0'
@@ -119,7 +108,6 @@ jobs:
         env:
           YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
           YARN_NM_MODE: 'hardlinks-local'
-          YARN_GLOBAL_FOLDER: '.yarn/global-no-cache/'
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache'
           YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
           YARN_COMPRESSION_LEVEL: 'mixed'
@@ -133,7 +121,6 @@ jobs:
         env:
           YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
           YARN_NM_MODE: 'hardlinks-local'
-          YARN_GLOBAL_FOLDER: '.yarn/global-no-cache-no-comp/'
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp'
           YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
           YARN_COMPRESSION_LEVEL: '0'
@@ -153,3 +140,23 @@ jobs:
         shell: bash
         run: pnpm install --store-dir ./node_modules/.pnpm-global-store --frozen-lockfile --prefer-offline
 
+      - name: ♻ Setup yarn pnp cache (no-compress)
+        uses: actions/cache@v3
+        id: yarn-pnp-benchmark-cache-no-compress
+        with:
+          path: ./.yarn/benchmark-pnp-cache/no-compress
+          key: yarn-pnp-benchmark-cache-no-compress-${{ hashFiles('yarn.pnp.lock', '.pnp*') }}
+          restore-keys: |
+            yarn-pnp-benchmark-cache-no-compress
+
+      - name: 📥 Yarn install P'n'P
+        run: yarn install --immutable --inline-builds
+        continue-on-error: true
+        env:
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_NODE_LINKER: 'pnp'
+          YARN_NM_MODE: 'hardlinks-local'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-pnp-cache/no-compress'
+          YARN_LOCKFILE_FILENAME: 'yarn.pnp.lock'
+          YARN_COMPRESSION_LEVEL: '0'
+          YARN_INSTALL_STATE_PATH: .yarn/install-state-pnp-no-compress.gz

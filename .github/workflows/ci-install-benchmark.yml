@@ -29,15 +29,6 @@ jobs:
           restore-keys: |
             yarn-benchmark-cache-no-compress
 
-      #- name: ♻ Setup yarn pnp cache (no-compress)
-      #  uses: actions/cache@v3
-      #  id: yarn-pnp-benchmark-cache-no-compress
-      #  with:
-      #    path: ./.yarn/benchmark-pnp-cache/no-compress
-      #    key: yarn-pnp-benchmark-cache-no-compress-${{ hashFiles('yarn.pnp.lock', '.pnp*') }}
-      #    restore-keys: |
-      #      yarn-pnp-benchmark-cache-no-compress
-
       - name: ♻ Setup yarn cache (mixed-compress)
         uses: actions/cache@v3
         id: yarn-benchmark-cache-mixed-compress
@@ -153,3 +144,12 @@ jobs:
         shell: bash
         run: pnpm install --store-dir ./node_modules/.pnpm-global-store --frozen-lockfile --prefer-offline
 
+      - name: ♻ Setup yarn pnp cache (no-compress)
+        continue-on-error: true
+        uses: actions/cache@v3
+        id: yarn-pnp-benchmark-cache-no-compress
+        with:
+          path: ./.yarn/benchmark-pnp-cache/no-compress
+          key: yarn-pnp-benchmark-cache-no-compress-${{ hashFiles('yarn.pnp.lock', '.pnp*') }}
+          restore-keys: |
+            yarn-pnp-benchmark-cache-no-compress

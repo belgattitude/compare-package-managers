@@ -141,7 +141,6 @@ jobs:
         run: pnpm install --store-dir ./node_modules/.pnpm-global-store --frozen-lockfile --prefer-offline
 
       - name: ♻ Setup yarn pnp cache (no-compress)
-        continue-on-error: true
         uses: actions/cache@v3
         id: yarn-pnp-benchmark-cache-no-compress
         with:
@@ -152,6 +151,7 @@ jobs:
 
       - name: 📥 Yarn install P'n'P
         run: yarn install --immutable --inline-builds
+        continue-on-error: true
         env:
           YARN_ENABLE_GLOBAL_CACHE: 'false'
           YARN_NODE_LINKER: 'pnp'

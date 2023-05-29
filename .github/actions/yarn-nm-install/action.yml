@@ -8,15 +8,17 @@
 #      - name: 📥 Monorepo install                                                     #
 #        uses: ./.github/actions/yarn-nm-install                                       #
 #        with:                                                                         #
-#          enable-corepack: false # (default)                                          #
-#          cache-node-modules: false # (default)                                       #
-#          cache-install-state: false # (default)                                      #
+#          enable-corepack: false                   # (default = 'false')              #
 #          cwd: ${{ github.workspace/apps/strapi }} # (default = '.')                  #
+#          cache-prefix: add cache key prefix       # (default = 'default')            #
+#          cache-node-modules: false                # (default = 'false')              #
+#          cache-install-state: false               # (default = 'false')              #
 #                                                                                      #
 # Reference:                                                                           #
 #   - latest: https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a    #
 #                                                                                      #
 # Versions:                                                                            #
+#   - 1.0.1 - 29-05-2023 - cache-prefix doc                                            #
 #   - 1.0.0 - 27-05-2023 - new input: cache-prefix                                     #
 ########################################################################################
 

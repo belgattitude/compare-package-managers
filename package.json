@@ -21,6 +21,7 @@
   "homepage": "https://github.com/belgattitude/compare-package-managers",
   "repository": "belgattitude/compare-package-managers",
   "scripts": {
+    "echo": "echo 'hello world'",
     "install:yarn-no-comp": "YARN_CACHE_FOLDER=.yarn/benchmark-cache/no-compress YARN_COMPRESSION_LEVEL=0 YARN_LOCKFILE_FILENAME=yarn.no-compress.lock yarn install --immutable",
     "install:yarn-mixed-comp": "YARN_CACHE_FOLDER=.yarn/benchmark-cache/mixed-compress YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock yarn install --immutable",
     "install:pnpm": "pnpm install --store-dir ./pnpm/.pnpm-global-store --frozen-lockfile --prefer-offline",

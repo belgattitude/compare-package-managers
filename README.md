@@ -202,6 +202,7 @@ taskset -c 0,1 hyperfine --runs=3 --export-markdown "docs/yarn-bench-various-par
 --show-output
 ```
 
+
 ```
 Summary
   'yarnCache:on - installState:on - nm:on' ran
@@ -209,6 +210,24 @@ Summary
     5.59 ± 0.24 times faster than 'yarnCache:on - installState:on - nm:off'
     5.95 ± 0.25 times faster than 'yarnCache:on - installState:off - nm:off'
 ```
+
+## Running scripts
+
+```bash
+export YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock 
+pnpm i --frozen-lockfile 
+yarn install --immutable
+hyperfine --show-output --runs=20 --export-markdown "docs/calling-npm-script.md" \
+"pnpm run echo" \
+"yarn run echo" \
+"npm run echo"
+```
+
+| Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
+|:---|---:|---:|---:|---:|
+| `pnpm run echo` | 444.5 ± 19.4 | 431.0 | 478.6 | 1.47 ± 0.06 |
+| `yarn run echo` | 770.2 ± 5.8 | 765.5 | 779.9 | 2.54 ± 0.02 |
+| `npm run echo` | 303.4 ± 1.2 | 302.2 | 304.9 | 1.00 |
 
 
 ## Changelog

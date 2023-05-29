@@ -53,12 +53,15 @@ Recent PNPM has a built-in dedupe like yarn. Dedupe checks are life-savers, what
 
 #### ⏩ Nextjs build speed and lambda size
 
-Build the nextjs-app [standalone mode](https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files): **Yarn / Pnpm are euqivalent (+/- 1min)**. Curious ? See the action in
+Build the nextjs-app [standalone mode](https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files): **Yarn / Pnpm are equivalent (+/- 1min)**. Curious ? See the action in
 [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)
 
-That said I couldn't reliably make prisma works with pnpm (without `auto-install-peers=true` which increase the deps a lot), 
-neither nextjs with standalone mode.
+On the pnpm side, it's more complex cause 
+
+- In many cases you'll have to run install with `auto-install-peers=true` or in `hoisted` mode to circumvent issues with some libraries. When doing this, expect rather slow installs (ie prisma without hacks, ...).
+- Nextjs standalone mode often breaks with pnpm
+- As pnpm/npm does not yet support supportedArchitectures, expect bigger lambda size (slow cold start). Nextjs/prisma tries to clean that up, but yarn does a better job (no more prisma binaries for glibc + musl, etc)
 
 See the section "Debug size" in [.github/workflows/ci-build-benchmark.yml](https://github.com/belgattitude/compare-package-managers/blob/main/.github/workflows/ci-build-benchmark.yml) and
 the [history log](https://github.com/belgattitude/compare-package-managers/actions/workflows/ci-build-benchmark.yml)

@@ -32,7 +32,7 @@ jobs:
         run: yarn check-size
 
       - name: 🧹 Reset install and builds
-        run: npx -y rimraf@latest --glob "**/node_modules" "**/.next" "**/.cache"
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" "**/.next" "**/.cache"
 
       - name: 📥 PNPM Monorepo install
         uses: ./.github/actions/pnpm-install

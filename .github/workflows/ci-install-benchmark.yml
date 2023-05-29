@@ -7,6 +7,11 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+    env:
+      PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+      HUSKY: '0'
+
     steps:
       - uses: actions/checkout@v3
 
@@ -79,12 +84,9 @@ jobs:
           YARN_COMPRESSION_LEVEL: 'mixed'
           YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-mixed-compress.gz
-          HUSKY: '0'
-          PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@latest --glob "**/node_modules"
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
 
       - name: 📥 Yarn install dependencies (no-compress)
         run: yarn install --immutable --inline-builds
@@ -96,12 +98,9 @@ jobs:
           YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
           YARN_COMPRESSION_LEVEL: '0'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-compress.gz
-          HUSKY: '0'
-          PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       #- name: 🧹 Remove node_modules
-      #  run: npx -y rimraf@latest --glob "**/node_modules"
+      #  run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
       #- name: 📥 Yarn PNP install
       #  run: yarn install --immutable --inline-builds
       #  env:
@@ -111,11 +110,9 @@ jobs:
       #    YARN_CACHE_FOLDER: '.yarn/benchmark-pnp-cache/no-compress'
       #    YARN_LOCKFILE_FILENAME: 'yarn.pnp.lock'
       #    YARN_COMPRESSION_LEVEL: '0'
-      #    HUSKY: '0'
-      #    PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@latest --glob "**/node_modules"
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
 
       - name: 📥 Yarn install no-cache (mixed-compress)
         run: yarn install --immutable --inline-builds
@@ -127,12 +124,9 @@ jobs:
           YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
           YARN_COMPRESSION_LEVEL: 'mixed'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache.gz
-          HUSKY: '0'
-          PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@latest --glob "**/node_modules"
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
 
       - name: 📥 Yarn install no-cache (no-compress)
         run: yarn install --immutable --inline-builds
@@ -144,29 +138,18 @@ jobs:
           YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
           YARN_COMPRESSION_LEVEL: '0'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress.gz
-          HUSKY: '0'
-          PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@latest --glob "**/node_modules"
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
 
       - name: 📥 PNPM install
         shell: bash
         run: pnpm install --frozen-lockfile --prefer-offline
-        env:
-          HUSKY: '0'
-          PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
       - name: 🧹 Remove node_modules
-        run: npx -y rimraf@latest --glob "**/node_modules"
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
 
       - name: 📥 PNPM install no-cache
         shell: bash
         run: pnpm install --store-dir ./node_modules/.pnpm-global-store --frozen-lockfile --prefer-offline
-        env:
-          HUSKY: '0'
-          PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 

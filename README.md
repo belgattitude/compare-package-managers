@@ -80,7 +80,7 @@ experience pnpm is sometimes harder to work with (ie prisma)
 ### Technicalities
 
 - [Yarn 4.0.0-rc.44](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 8.5.1](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Pnpm 8.6.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 

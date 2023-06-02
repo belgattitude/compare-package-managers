@@ -10,7 +10,7 @@ jobs:
   install-yarn:
     runs-on: ubuntu-latest
     env:
-      YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
+      YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
     steps:
       - uses: actions/checkout@v3
 
@@ -22,6 +22,7 @@ jobs:
       - name: 📥 Monorepo yarn install
         uses: ./.github/actions/yarn-nm-install
         with:
+          cache-prefix: 'job-persist'
           cache-node-modules: true
           cache-install-state: true
 
@@ -43,5 +44,7 @@ jobs:
       - name: 📥 Monorepo yarn install
         uses: ./.github/actions/yarn-nm-install
         with:
+          cache-prefix: 'job-persist'
           cache-node-modules: true
           cache-install-state: true
+

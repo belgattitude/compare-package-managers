@@ -54,7 +54,7 @@ jobs:
       - name: ⚙ Install pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: {{ env.PNPM_VERSION }}
+          version: "{{ env.PNPM_VERSION }}"
 
       - name: ⚙ Expose pnpm config(s) through "$GITHUB_OUTPUT"
         id: pnpm-config

@@ -4,7 +4,6 @@ export PRISMA_SKIP_POSTINSTALL_GENERATE=true PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=tr
 
 
 npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/install-stat*.gz' '.yarn/unplugged'
-
 YARN_RC_FILENAME=.yarnrc.mixed-compress.yml yarn install --inline-builds
 YARN_RC_FILENAME=.yarnrc.mixed-compress.yml yarn dedupe
 

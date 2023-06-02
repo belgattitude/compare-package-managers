@@ -1,0 +1,15 @@
+nodeLinker: node-modules
+nmMode: hardlinks-local
+compressionLevel: 'mixed'
+lockfileFilename: 'yarn.mixed-compress.lock'
+installStatePath: .yarn/install-state.mixed-compress.gz
+enableGlobalCache: false
+cacheFolder: .yarn/benchmark-cache/mixed-compress
+supportedArchitectures:
+  cpu:
+    - current
+  libc:
+    - current
+  os:
+    - current
+yarnPath: .yarn/releases/yarn-4.0.0-rc.45.cjs

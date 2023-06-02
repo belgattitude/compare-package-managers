@@ -6,11 +6,12 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+env:
+  YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+
 jobs:
   install-yarn:
     runs-on: ubuntu-latest
-    env:
-      YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
     steps:
       - uses: actions/checkout@v3
 
@@ -30,8 +31,6 @@ jobs:
   install-yarn-second-time:
     needs: install-yarn
     runs-on: ubuntu-latest
-    env:
-      YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
 
     steps:
       - uses: actions/checkout@v3

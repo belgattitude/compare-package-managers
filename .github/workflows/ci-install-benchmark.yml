@@ -8,6 +8,8 @@ jobs:
       matrix:
         node-version: [18.x]
     env:
+      YARN_VERSION: '4.0.0-rc.45'
+      PNPM_VERSION: '8.6.0'
       PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
       HUSKY: '0'
@@ -19,6 +21,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+
+      # not needed outside benchmarks
+      - name: ⚙ To ease benchmarks and detection of YARN_RC_FILENAME
+        run: corepack prepare yarn@{{ env.YARN_VERSION }} --activate
 
       - name: ♻ Setup yarn cache (no-compress)
         uses: actions/cache@v3
@@ -48,7 +54,7 @@ jobs:
       - name: ⚙ Install pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: 8.6.0
+          version: {{ env.PNPM_VERSION }}
 
       - name: ⚙ Expose pnpm config(s) through "$GITHUB_OUTPUT"
         id: pnpm-config

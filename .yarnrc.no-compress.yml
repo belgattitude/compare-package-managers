@@ -1,6 +1,6 @@
 nodeLinker: node-modules
 nmMode: hardlinks-local
-lockfileFilename: 'yarn.pnp.no-compress.lock'
+lockfileFilename: ./yarn.no-compress.lock
 compressionLevel: 0
 enableGlobalCache: false
 cacheFolder: .yarn/benchmark-cache/no-compress

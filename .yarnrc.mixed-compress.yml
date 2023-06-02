@@ -1,7 +1,7 @@
 nodeLinker: node-modules
 nmMode: hardlinks-local
 compressionLevel: 'mixed'
-lockfileFilename: 'yarn.mixed-compress.lock'
+lockfileFilename: ./yarn.mixed-compress.lock
 installStatePath: .yarn/install-state.mixed-compress.gz
 enableGlobalCache: false
 cacheFolder: .yarn/benchmark-cache/mixed-compress

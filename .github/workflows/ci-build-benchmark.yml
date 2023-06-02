@@ -1,16 +1,16 @@
 name: 'Build benchmarks'
 on: [push]
+env:
+  YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+  PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+
 jobs:
   build-bench:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [18.x]
-    env:
-      YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
-      PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
-
     steps:
       - uses: actions/checkout@v3
 
@@ -21,6 +21,8 @@ jobs:
 
       - name: 📥 YARN Monorepo install
         uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-prefix: 'build-bench'
 
       - name: YARN Nextjs build
         working-directory: ${{ github.workspace }}/apps/nextjs-app
@@ -50,10 +52,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-    env:
-      YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
-      PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
     steps:
       - uses: actions/checkout@v3
@@ -65,6 +63,8 @@ jobs:
 
       - name: 📥 YARN Monorepo install
         uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-prefix: 'build-bench'
 
       - name: YARN Typecheck
         working-directory: ${{ github.workspace }}/apps/nextjs-app

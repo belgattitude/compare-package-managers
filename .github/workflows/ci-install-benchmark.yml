@@ -1,16 +1,18 @@
 # Bench yarn with compression vs without + action/cache
 name: 'Install benchmarks'
 on: [push]
+
+env:
+  PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+  HUSKY: '0'
+
 jobs:
   install-bench:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [18.x]
-    env:
-      PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
-      HUSKY: '0'
 
     steps:
       - uses: actions/checkout@v3
@@ -87,18 +89,6 @@ jobs:
           YARN_ENABLE_GLOBAL_CACHE: 'false'
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/pnp-no-compress'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-compress.gz
-
-      #- name: 🧹 Remove node_modules
-      #  run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-      #- name: 📥 Yarn PNP install
-      #  run: yarn install --immutable --inline-builds
-      #  env:
-      #    YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
-      #    YARN_NODE_LINKER: 'pnp'
-      #    YARN_GLOBAL_FOLDER: '.yarn/global-no-cache/'
-      #    YARN_CACHE_FOLDER: '.yarn/benchmark-pnp-cache/no-compress'
-      #    YARN_LOCKFILE_FILENAME: 'yarn.pnp.lock'
-      #    YARN_COMPRESSION_LEVEL: '0'
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"

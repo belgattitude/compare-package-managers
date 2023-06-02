@@ -8,6 +8,8 @@ on:
 
 env:
   YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+  PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
 
 jobs:
   install-yarn:

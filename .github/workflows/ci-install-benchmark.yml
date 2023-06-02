@@ -65,12 +65,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-benchmark-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-
 
-      - name: 📥 Yarn install dependencies  (mixed-compress)
+      - name: 📥 Yarn install dependencies (mixed-compress)
         run: yarn install --immutable --inline-builds
         env:
-          YARN_RC_FILENAME: '.yarnrc.mixed-compress.yml'
+          YARN_RC_FILENAME: .yarnrc.mixed-compress.yml
           YARN_ENABLE_GLOBAL_CACHE: 'false'
-          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/mixed-compress'
+          YARN_CACHE_FOLDER: .yarn/benchmark-cache/mixed-compress
           YARN_INSTALL_STATE_PATH: .yarn/install-state-mixed-compress.gz
 
       - name: 🧹 Remove node_modules

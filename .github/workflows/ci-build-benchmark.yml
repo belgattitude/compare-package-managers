@@ -1,17 +1,16 @@
 name: 'Build benchmarks'
 on: [push]
+env:
+  YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+  PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+
 jobs:
   build-bench:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [18.x]
-    env:
-      YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
-      YARN_COMPRESSION_LEVEL: '0'
-      PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
-
     steps:
       - uses: actions/checkout@v3
 
@@ -22,6 +21,8 @@ jobs:
 
       - name: 📥 YARN Monorepo install
         uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-prefix: 'build-bench'
 
       - name: YARN Nextjs build
         working-directory: ${{ github.workspace }}/apps/nextjs-app
@@ -44,4 +45,38 @@ jobs:
       - name: PNPM Debug size
         working-directory: ${{ github.workspace }}/apps/nextjs-app
         run: pnpm run check-size
+
+  typecheck-bench:
+    runs-on: ubuntu-latest
+    needs: ['build-bench']
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📥 YARN Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-prefix: 'build-bench'
+
+      - name: YARN Typecheck
+        working-directory: ${{ github.workspace }}/apps/nextjs-app
+        run: yarn typecheck
+
+      - name: 🧹 Reset install and builds
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" "**/.next" "**/.cache"
+
+      - name: 📥 PNPM Monorepo install
+        uses: ./.github/actions/pnpm-install
+
+      - name: PNPM Typecheck
+        working-directory: ${{ github.workspace }}/apps/nextjs-app
+        run: pnpm typecheck
 

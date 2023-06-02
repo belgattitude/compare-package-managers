@@ -1,16 +1,18 @@
 # Bench yarn with compression vs without + action/cache
 name: 'Install benchmarks'
 on: [push]
+
+env:
+  PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+  HUSKY: '0'
+
 jobs:
   install-bench:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [18.x]
-    env:
-      PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
-      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
-      HUSKY: '0'
 
     steps:
       - uses: actions/checkout@v3
@@ -19,6 +21,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+
+      # not needed outside benchmarks
+      - name: ⚙ To ease benchmarks and detection of YARN_RC_FILENAME
+        run: corepack enable
 
       - name: ♻ Setup yarn cache (no-compress)
         uses: actions/cache@v3
@@ -48,7 +54,7 @@ jobs:
       - name: ⚙ Install pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: 8.5.1
+          version: 8.6.0
 
       - name: ⚙ Expose pnpm config(s) through "$GITHUB_OUTPUT"
         id: pnpm-config
@@ -65,14 +71,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-benchmark-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-
 
-      - name: 📥 Yarn install dependencies  (mixed-compress)
+      - name: 📥 Yarn install dependencies (mixed-compress)
         run: yarn install --immutable --inline-builds
         env:
-          YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
-          YARN_NM_MODE: 'hardlinks-local'
-          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/mixed-compress'
-          YARN_COMPRESSION_LEVEL: 'mixed'
-          YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
+          YARN_RC_FILENAME: .yarnrc.mixed-compress.yml
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_CACHE_FOLDER: .yarn/benchmark-cache/mixed-compress
           YARN_INSTALL_STATE_PATH: .yarn/install-state-mixed-compress.gz
 
       - name: 🧹 Remove node_modules
@@ -81,24 +85,10 @@ jobs:
       - name: 📥 Yarn install dependencies (no-compress)
         run: yarn install --immutable --inline-builds
         env:
-          YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
-          YARN_NM_MODE: 'hardlinks-local'
-          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-compress'
-          YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
-          YARN_COMPRESSION_LEVEL: '0'
+          YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/pnp-no-compress'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-compress.gz
-
-      #- name: 🧹 Remove node_modules
-      #  run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-      #- name: 📥 Yarn PNP install
-      #  run: yarn install --immutable --inline-builds
-      #  env:
-      #    YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
-      #    YARN_NODE_LINKER: 'pnp'
-      #    YARN_GLOBAL_FOLDER: '.yarn/global-no-cache/'
-      #    YARN_CACHE_FOLDER: '.yarn/benchmark-pnp-cache/no-compress'
-      #    YARN_LOCKFILE_FILENAME: 'yarn.pnp.lock'
-      #    YARN_COMPRESSION_LEVEL: '0'
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
@@ -106,11 +96,9 @@ jobs:
       - name: 📥 Yarn install no-cache (mixed-compress)
         run: yarn install --immutable --inline-builds
         env:
-          YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
-          YARN_NM_MODE: 'hardlinks-local'
-          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache'
-          YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
-          YARN_COMPRESSION_LEVEL: 'mixed'
+          YARN_RC_FILENAME: '.yarnrc.mixed-compress.yml'
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-compress'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache.gz
 
       - name: 🧹 Remove node_modules
@@ -119,11 +107,9 @@ jobs:
       - name: 📥 Yarn install no-cache (no-compress)
         run: yarn install --immutable --inline-builds
         env:
-          YARN_ENABLE_GLOBAL_CACHE: 'false' # Prune cache (yarn.lock changes)
-          YARN_NM_MODE: 'hardlinks-local'
+          YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp'
-          YARN_LOCKFILE_FILENAME: 'yarn.no-compress.lock'
-          YARN_COMPRESSION_LEVEL: '0'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress.gz
 
       - name: 🧹 Remove node_modules
@@ -144,8 +130,8 @@ jobs:
         uses: actions/cache@v3
         id: yarn-pnp-benchmark-cache-no-compress
         with:
-          path: ./.yarn/benchmark-pnp-cache/no-compress
-          key: yarn-pnp-benchmark-cache-no-compress-${{ hashFiles('yarn.pnp.lock', '.pnp*') }}
+          path: ./.yarn/benchmark-cache/pnp-no-compress
+          key: yarn-pnp-benchmark-cache-no-compress-${{ hashFiles('yarn.pnp.no-compress.lock', '.pnp*') }}
           restore-keys: |
             yarn-pnp-benchmark-cache-no-compress
 

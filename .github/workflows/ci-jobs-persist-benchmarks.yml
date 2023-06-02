@@ -6,11 +6,14 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+env:
+  YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+  PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+
 jobs:
   install-yarn:
     runs-on: ubuntu-latest
-    env:
-      YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
     steps:
       - uses: actions/checkout@v3
 
@@ -22,6 +25,7 @@ jobs:
       - name: 📥 Monorepo yarn install
         uses: ./.github/actions/yarn-nm-install
         with:
+          cache-prefix: 'job-persist'
           cache-node-modules: true
           cache-install-state: true
 
@@ -29,8 +33,6 @@ jobs:
   install-yarn-second-time:
     needs: install-yarn
     runs-on: ubuntu-latest
-    env:
-      YARN_LOCKFILE_FILENAME: 'yarn.mixed-compress.lock'
 
     steps:
       - uses: actions/checkout@v3
@@ -43,5 +45,7 @@ jobs:
       - name: 📥 Monorepo yarn install
         uses: ./.github/actions/yarn-nm-install
         with:
+          cache-prefix: 'job-persist'
           cache-node-modules: true
           cache-install-state: true
+

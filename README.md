@@ -32,7 +32,7 @@ Measured through github actions. See [workflows/ci-install-benchmark.yml](./.git
 | CI Scenario                        | Install | Diff with cached run | 
 |------------------------------------|--------:|---------------------:|
 | yarn4 mixed-compression / no cache |    ±83s |      > 2x slower |
-| yarn4 no compression / no cache    |    ±45s |      > 2x slower |
+| yarn4 no compression / no cache    |    ±45s |      < 2x slower |
 | pnpm8 / no cache                   |    ±48s |       2x slower | 
 
 

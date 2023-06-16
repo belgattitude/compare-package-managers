@@ -26,6 +26,12 @@ jobs:
       - name: ⚙ To ease benchmarks and detection of YARN_RC_FILENAME
         run: corepack enable
 
+      - name: Expose npm config(s) through "$GITHUB_OUTPUT"
+        id: npm-config
+        shell: bash
+        run: |
+          echo "NPM_CACHE_PATH=$(npm get cache)" >> $GITHUB_OUTPUT
+
       - name: ♻ Setup yarn cache (no-compress)
         uses: actions/cache@v3
         id: yarn-benchmark-cache-no-compress
@@ -79,8 +85,8 @@ jobs:
           YARN_CACHE_FOLDER: .yarn/benchmark-cache/mixed-compress
           YARN_INSTALL_STATE_PATH: .yarn/install-state-mixed-compress.gz
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+      - name: 🧹 Remove node_modules and others
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 Yarn install dependencies (no-compress)
         run: yarn install --immutable --inline-builds
@@ -90,8 +96,8 @@ jobs:
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/pnp-no-compress'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-compress.gz
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+      - name: 🧹 Remove node_modules and others
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 Yarn install no-cache (mixed-compress)
         run: yarn install --immutable --inline-builds
@@ -101,8 +107,8 @@ jobs:
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-compress'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache.gz
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+      - name: 🧹 Remove node_modules and others
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 Yarn install no-cache (no-compress)
         run: yarn install --immutable --inline-builds
@@ -112,15 +118,15 @@ jobs:
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress.gz
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+      - name: 🧹 Remove node_modules and others
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 PNPM install
         shell: bash
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: 🧹 Remove node_modules
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+      - name: 🧹 Remove node_modules and others
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 PNPM install no-cache
         shell: bash
@@ -134,6 +140,9 @@ jobs:
           key: yarn-pnp-benchmark-cache-no-compress-${{ hashFiles('yarn.pnp.no-compress.lock', '.pnp*') }}
           restore-keys: |
             yarn-pnp-benchmark-cache-no-compress
+
+      - name: 🧹 Remove node_modules and others
+        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 Yarn install P'n'P
         run: yarn install --immutable --inline-builds

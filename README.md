@@ -215,21 +215,21 @@ Summary
 ## Running scripts
 
 ```bash
-export YARN_VERSION="4.0.0-rc.45" PNPM_VERSION="8.6.2"; NPM_VERSION="9.7.1"
+export YARN_VERSION="4.0.0-rc.45" PNPM_VERSION="8.6.2"; NPM_VERSION="9.6.1"
 export YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock; 
 pnpm i --frozen-lockfile; 
 corepack yarn@${YARN_VERSION} install --immutable;
-hyperfine --show-output --runs=20 --export-markdown "docs/calling-npm-script.md" \
+hyperfine --show-output --warmup=1 --runs=20 --export-markdown "docs/calling-npm-script.md" \
 "corepack pnpm@${PNPM_VERSION} run echo" \
 "corepack yarn@${YARN_VERSION} run echo" \
-"corepack npm@{$NPM_VERSION} run echo"
+"corepack npm@${NPM_VERSION} run echo"
 ```
 
-| Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
-|:---|---:|---:|---:|---:|
-| `pnpm run echo` | 444.5 ± 19.4 | 431.0 | 478.6 | 1.47 ± 0.06 |
-| `yarn run echo` | 770.2 ± 5.8 | 765.5 | 779.9 | 2.54 ± 0.02 |
-| `npm run echo` | 303.4 ± 1.2 | 302.2 | 304.9 | 1.00 |
+| Command                              |    Mean [ms] | Min [ms] | Max [ms] |    Relative |
+|:-------------------------------------|-------------:|---------:|---------:|------------:|
+| `corepack pnpm@8.6.2 run echo`       |  414.6 ± 8.1 |    400.9 |    431.4 | 1.21 ± 0.03 |
+| `corepack yarn@4.0.0-rc.45 run echo` | 634.6 ± 24.9 |    613.0 |    712.0 | 1.85 ± 0.08 |
+| `corepack npm@9.6.1 run echo`        |  342.9 ± 5.4 |    337.0 |    358.2 |        1.00 |
 
 
 ## Changelog

@@ -72,8 +72,7 @@
     "packages:clean": "yarn workspaces foreach -ptv --include 'packages/*' run clean",
     "packages:lint": "yarn workspaces foreach -ptv --include 'packages/*' run lint",
     "packages:test:unit": "yarn workspaces foreach -ptv --include 'packages/*' run test-unit",
-    "packages:typecheck": "yarn workspaces foreach -ptv --include 'packages/*' run typecheck",
-    "postinstall": "is-ci || yarn husky install"
+    "packages:typecheck": "yarn workspaces foreach -ptv --include 'packages/*' run typecheck"
   },
   "dependencies": {
     "cross-env": "7.0.3"

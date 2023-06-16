@@ -1,10 +1,24 @@
+# nodeLinker: instruct yarn to install using the class node_modules structure (vs pnp)
+# https://yarnpkg.com/configuration/yarnrc#nodeLinker
 nodeLinker: node-modules
+
+# nmMode: hardlinks-local will reduce the node-modules size on most platforms
+# https://yarnpkg.com/configuration/yarnrc#nmMode
 nmMode: hardlinks-local
+
+# Set the zip compression level for yarn cache. This is a tradeoff between
+# install time and the cache size.
+# https://yarnpkg.com/configuration/yarnrc#compressionLevel
 compressionLevel: 'mixed'
-lockfileFilename: ./yarn.mixed-compress.lock
-installStatePath: .yarn/install-state.mixed-compress.gz
+
+# Instruct yarn to either save the archive cache globally in home directory to
+# allow multiple projects to use it. If false the cache is per project (and can be rotated)
+# https://yarnpkg.com/configuration/yarnrc#enableGlobalCache
 enableGlobalCache: false
-cacheFolder: .yarn/benchmark-cache/mixed-compress
+
+# Allow to save space and avoid to downloads unrequired binaries. Generally fixes
+# issues with cold-start in lambdas (yarn will use the minimum required)
+# https://yarnpkg.com/configuration/yarnrc#supportedArchitectures
 supportedArchitectures:
   cpu:
     - current
@@ -12,4 +26,13 @@ supportedArchitectures:
     - current
   os:
     - current
+
+# The git committed yarn binary / version to use. Can be omitted when using corepack
 yarnPath: .yarn/releases/yarn-4.0.0-rc.45.cjs
+
+
+# The following options must be omitted outside of benchmarks
+# https://github.com/belgattitude/compare-package-managers
+lockfileFilename: ./yarn.mixed-compress.lock
+installStatePath: .yarn/install-state.mixed-compress.gz
+cacheFolder: .yarn/benchmark-cache/mixed-compress

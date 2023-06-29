@@ -1,8 +1,11 @@
+# https://github.com/yarnpkg/berry/pull/5544#issuecomment-1613661101
+injectEnvironmentFiles: []
+
 nodeLinker: pnp
 nmMode: hardlinks-local
 compressionLevel: 0
 lockfileFilename: ./yarn.pnp.no-compress.lock
-installStatePath: .yarn/install-state.no-compress.gz
+installStatePath: .yarn/install-state.pnpm.no-compress.gz
 enableGlobalCache: false
 cacheFolder: .yarn/benchmark-cache/pnp-no-compress
 supportedArchitectures:
@@ -12,4 +15,4 @@ supportedArchitectures:
     - current
   os:
     - current
-yarnPath: .yarn/releases/yarn-4.0.0-rc.45.cjs
+yarnPath: .yarn/releases/yarn-4.0.0-rc.47.cjs

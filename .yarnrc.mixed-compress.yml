@@ -1,3 +1,5 @@
+# https://github.com/yarnpkg/berry/pull/5544#issuecomment-1613661101
+injectEnvironmentFiles: []
 # nodeLinker: instruct yarn to install using the class node_modules structure (vs pnp)
 # https://yarnpkg.com/configuration/yarnrc#nodeLinker
 nodeLinker: node-modules
@@ -28,7 +30,7 @@ supportedArchitectures:
     - current
 
 # The git committed yarn binary / version to use. Can be omitted when using corepack
-yarnPath: .yarn/releases/yarn-4.0.0-rc.45.cjs
+yarnPath: .yarn/releases/yarn-4.0.0-rc.47.cjs
 
 
 # The following options must be omitted outside of benchmarks

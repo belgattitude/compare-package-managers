@@ -15,7 +15,7 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml) and [latest run](https://github.com/belgattitude/compare-package-managers/actions/runs/5092812836/jobs/9154654118)
 
-- PNPM 8.6.2 - **25s** (16s + 9s for cache fetch / decompress), see [.npmrc](./.npmrc)
+- PNPM 8.6.5 - **25s** (16s + 9s for cache fetch / decompress), see [.npmrc](./.npmrc)
 - Yarn 4.0.0-rc.44 / nmLinker - **28s** (26s+2s with compressionLevel:0), see [.yarnrc.no-compress.yml](./.yarnrc.no-compress.yml)
 - Yarn 4.0.0-rc.44 / nmLinker - **37s** (34s+3s with compressionLevel:mixed), see [.yarnrc.mixed-compress.yml](./.yarnrc.mixed-compress.yml)
 
@@ -25,7 +25,7 @@ Measured through github actions. See [workflows/ci-install-benchmark.yml](./.git
 |-------------------------|--------:|---------------:|--------:|-----------:|-----------------:|
 | yarn4 mixed-compression |     34s |             3s | **37s** |      201Mb |          *(±5s)* |
 | yarn4 no compression    |     26s |             2s | **28s** |      155Mb |          *(±8s)* |
-| pnpm8.6.2               |     16s |             9s |  **25s** |      253Mb |         *(±30s)* |
+| pnpm8.6.5               |     16s |             9s |  **25s** |      253Mb |         *(±30s)* |
 
 **Without cache**
 
@@ -79,8 +79,8 @@ experience pnpm is sometimes harder to work with (ie prisma)
 
 ### Technicalities
 
-- [Yarn 4.0.0-rc.44](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 8.6.2](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Yarn 4.0.0-rc.47](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
+- [Pnpm 8.6.5](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 
@@ -227,8 +227,8 @@ hyperfine --show-output --warmup=1 --runs=20 --export-markdown "docs/calling-npm
 
 | Command                              |    Mean [ms] | Min [ms] | Max [ms] |    Relative |
 |:-------------------------------------|-------------:|---------:|---------:|------------:|
-| `corepack pnpm@8.6.2 run echo`       |  414.6 ± 8.1 |    400.9 |    431.4 | 1.21 ± 0.03 |
-| `corepack yarn@4.0.0-rc.45 run echo` | 634.6 ± 24.9 |    613.0 |    712.0 | 1.85 ± 0.08 |
+| `corepack pnpm@8.6.5 run echo`       |  414.6 ± 8.1 |    400.9 |    431.4 | 1.21 ± 0.03 |
+| `corepack yarn@4.0.0-rc.47 run echo` | 634.6 ± 24.9 |    613.0 |    712.0 | 1.85 ± 0.08 |
 | `corepack npm@9.6.1 run echo`        |  342.9 ± 5.4 |    337.0 |    358.2 |        1.00 |
 
 

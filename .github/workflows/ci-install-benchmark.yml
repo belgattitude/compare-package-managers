@@ -141,17 +141,17 @@ jobs:
           restore-keys: |
             yarn-pnp-benchmark-cache-no-compress
 
-      - name: 🧹 Remove node_modules and others
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
+      #- name: 🧹 Remove node_modules and others
+      #  run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
-      - name: 📥 Yarn install P'n'P
-        run: yarn install --immutable --inline-builds
-        continue-on-error: true
-        env:
-          YARN_ENABLE_GLOBAL_CACHE: 'false'
-          YARN_NODE_LINKER: 'pnp'
-          YARN_NM_MODE: 'hardlinks-local'
-          YARN_CACHE_FOLDER: '.yarn/benchmark-pnp-cache/no-compress'
-          YARN_LOCKFILE_FILENAME: 'yarn.pnp.lock'
-          YARN_COMPRESSION_LEVEL: '0'
-          YARN_INSTALL_STATE_PATH: .yarn/install-state-pnp-no-compress.gz
+      #- name: 📥 Yarn install P'n'P
+      #  run: yarn install --immutable --inline-builds
+      #  continue-on-error: true
+      #  env:
+      #    YARN_ENABLE_GLOBAL_CACHE: 'false'
+      #    YARN_NODE_LINKER: 'pnp'
+      #    YARN_NM_MODE: 'hardlinks-local'
+      #    YARN_CACHE_FOLDER: '.yarn/benchmark-pnp-cache/no-compress'
+      #    YARN_LOCKFILE_FILENAME: 'yarn.pnp.lock'
+      #    YARN_COMPRESSION_LEVEL: '0'
+      #    YARN_INSTALL_STATE_PATH: .yarn/install-state-pnp-no-compress.gz

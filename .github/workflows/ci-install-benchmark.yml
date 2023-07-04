@@ -86,7 +86,7 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-mixed-compress.gz
 
       - name: 🧹 Remove node_modules and others
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
+        run: npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/install-stat*.gz' '.yarn/unplugged' '/tmp/xfs-*' ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 Yarn install dependencies (no-compress)
         run: yarn install --immutable --inline-builds
@@ -97,7 +97,7 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-compress.gz
 
       - name: 🧹 Remove node_modules and others
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
+        run: npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/install-stat*.gz' '.yarn/unplugged' '/tmp/xfs-*' ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 Yarn install no-cache (mixed-compress)
         run: yarn install --immutable --inline-builds
@@ -108,7 +108,7 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache.gz
 
       - name: 🧹 Remove node_modules and others
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
+        run: npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/install-stat*.gz' '.yarn/unplugged' '/tmp/xfs-*' ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 Yarn install no-cache (no-compress)
         run: yarn install --immutable --inline-builds
@@ -119,14 +119,14 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress.gz
 
       - name: 🧹 Remove node_modules and others
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
+        run: npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/install-stat*.gz' '.yarn/unplugged' '/tmp/xfs-*' ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 PNPM install
         shell: bash
         run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: 🧹 Remove node_modules and others
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
+        run: npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/install-stat*.gz' '.yarn/unplugged' '/tmp/xfs-*' ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       - name: 📥 PNPM install no-cache
         shell: bash
@@ -142,7 +142,7 @@ jobs:
             yarn-pnp-benchmark-cache-no-compress
 
       #- name: 🧹 Remove node_modules and others
-      #  run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz" ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
+      #  run: npx -y rimraf@5.0.1 --glob '**/node_modules' '.yarn/install-stat*.gz' '.yarn/unplugged' '/tmp/xfs-*' ${{ steps.npm-config.outputs.NPM_CACHE_PATH }}
 
       #- name: 📥 Yarn install P'n'P
       #  run: yarn install --immutable --inline-builds

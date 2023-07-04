@@ -15,9 +15,9 @@ Potential for co2 emissions reductions at install, build and runtime (♻️🌳
 
 Measured through github actions. See [workflows/ci-install-benchmark.yml](./.github/workflows/ci-install-benchmark.yml) and [latest run](https://github.com/belgattitude/compare-package-managers/actions/runs/5092812836/jobs/9154654118)
 
-- PNPM 8.5.1 - **25s** (16s + 9s for cache fetch / decompress), see [.npmrc](./.npmrc)
-- Yarn 4.0.0-rc.44 / nmLinker - **28s** (26s+2s with compressionLevel:0), see [.yarnrc.no-compress.yml](./.yarnrc.no-compress.yml)
-- Yarn 4.0.0-rc.44 / nmLinker - **37s** (34s+3s with compressionLevel:mixed), see [.yarnrc.mixed-compress.yml](./.yarnrc.mixed-compress.yml)
+- PNPM 8.6.6 - **25s** (16s + 9s for cache fetch / decompress), see [.npmrc](./.npmrc)
+- Yarn 4.0.0-rc.48 / nmLinker - **28s** (26s+2s with compressionLevel:0), see [.yarnrc.no-compress.yml](./.yarnrc.no-compress.yml)
+- Yarn 4.0.0-rc.48 / nmLinker - **37s** (34s+3s with compressionLevel:mixed), see [.yarnrc.mixed-compress.yml](./.yarnrc.mixed-compress.yml)
 
 **With cache**
 
@@ -25,7 +25,7 @@ Measured through github actions. See [workflows/ci-install-benchmark.yml](./.git
 |-------------------------|--------:|---------------:|--------:|-----------:|-----------------:|
 | yarn4 mixed-compression |     34s |             3s | **37s** |      201Mb |          *(±5s)* |
 | yarn4 no compression    |     26s |             2s | **28s** |      155Mb |          *(±8s)* |
-| pnpm8.5.1               |     16s |             9s |  **25s** |      253Mb |         *(±30s)* |
+| pnpm8.6.6               |     16s |             9s |  **25s** |      253Mb |         *(±30s)* |
 
 **Without cache**
 
@@ -79,8 +79,8 @@ experience pnpm is sometimes harder to work with (ie prisma)
 
 ### Technicalities
 
-- [Yarn 4.0.0-rc.44](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
-- [Pnpm 8.6.0](https://pnpm.io/) - "Fast, disk space efficient package manager".
+- [Yarn 4.0.0-rc.48](https://yarnpkg.com/) - "Safe, stable, reproducible projects".
+- [Pnpm 8.6.6](https://pnpm.io/) - "Fast, disk space efficient package manager".
 
 Yarn support 3 module resolution algorithms (often called hoisting): node_modules, pnp and pnpm (alpha). Only the
 `nodeLinker: node-modules` have been included in this test to prevent any compatibility issues. 
@@ -215,20 +215,21 @@ Summary
 ## Running scripts
 
 ```bash
-export YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock 
-pnpm i --frozen-lockfile 
-yarn install --immutable
-hyperfine --show-output --runs=20 --export-markdown "docs/calling-npm-script.md" \
-"pnpm run echo" \
-"yarn run echo" \
-"npm run echo"
+export YARN_VERSION="4.0.0-rc.45" PNPM_VERSION="8.6.2"; NPM_VERSION="9.6.1"
+export YARN_COMPRESSION_LEVEL=mixed YARN_LOCKFILE_FILENAME=yarn.mixed-compress.lock; 
+pnpm i --frozen-lockfile; 
+corepack yarn@${YARN_VERSION} install --immutable;
+hyperfine --show-output --warmup=1 --runs=20 --export-markdown "docs/calling-npm-script.md" \
+"corepack pnpm@${PNPM_VERSION} run echo" \
+"corepack yarn@${YARN_VERSION} run echo" \
+"corepack npm@${NPM_VERSION} run echo"
 ```
 
-| Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
-|:---|---:|---:|---:|---:|
-| `pnpm run echo` | 444.5 ± 19.4 | 431.0 | 478.6 | 1.47 ± 0.06 |
-| `yarn run echo` | 770.2 ± 5.8 | 765.5 | 779.9 | 2.54 ± 0.02 |
-| `npm run echo` | 303.4 ± 1.2 | 302.2 | 304.9 | 1.00 |
+| Command                              |    Mean [ms] | Min [ms] | Max [ms] |    Relative |
+|:-------------------------------------|-------------:|---------:|---------:|------------:|
+| `corepack pnpm@8.6.6 run echo`       |  414.6 ± 8.1 |    400.9 |    431.4 | 1.21 ± 0.03 |
+| `corepack yarn@4.0.0-rc.48 run echo` | 634.6 ± 24.9 |    613.0 |    712.0 | 1.85 ± 0.08 |
+| `corepack npm@9.6.1 run echo`        |  342.9 ± 5.4 |    337.0 |    358.2 |        1.00 |
 
 
 ## Changelog

@@ -1,9 +1,7 @@
 nodeLinker: node-modules
 nmMode: hardlinks-local
-lockfileFilename: ./yarn.no-compress.lock
 compressionLevel: 0
 enableGlobalCache: false
-cacheFolder: .yarn/benchmark-cache/no-compress
 supportedArchitectures:
   cpu:
     - current
@@ -11,4 +9,7 @@ supportedArchitectures:
     - current
   os:
     - current
-yarnPath: .yarn/releases/yarn-4.0.0-rc.45.cjs
+yarnPath: .yarn/releases/yarn-4.0.0-rc.48.cjs
+lockfileFilename: ./yarn.no-compress.lock
+installStatePath: .yarn/install-state.no-compress.gz
+cacheFolder: .yarn/benchmark-cache/no-compress

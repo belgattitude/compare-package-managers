@@ -1,6 +1,3 @@
-# https://github.com/yarnpkg/berry/pull/5544#issuecomment-1613661101
-injectEnvironmentFiles: []
-
 nodeLinker: pnp
 nmMode: hardlinks-local
 compressionLevel: 0
@@ -15,4 +12,4 @@ supportedArchitectures:
     - current
   os:
     - current
-yarnPath: .yarn/releases/yarn-4.0.0-rc.47.cjs
+yarnPath: .yarn/releases/yarn-4.0.0-rc.48.cjs

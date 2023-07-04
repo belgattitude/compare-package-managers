@@ -97,9 +97,9 @@
     "turbo": "1.10.6",
     "typescript": "5.1.6"
   },
-  "packageManager": "yarn@4.0.0-rc.47",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "packageManager": "yarn@4.0.0-rc.48"
 }

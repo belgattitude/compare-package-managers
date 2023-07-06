@@ -18,6 +18,7 @@
 #   - latest: https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a    #
 #                                                                                      #
 # Versions:                                                                            #
+#   - 1.0.3 - 05-07-2023 - YARN_ENABLE_MIRROR to false (speed up cold start)           #
 #   - 1.0.2 - 02-06-2023 - install-state default to false                              #
 #   - 1.0.1 - 29-05-2023 - cache-prefix doc                                            #
 #   - 1.0.0 - 27-05-2023 - new input: cache-prefix                                     #
@@ -99,9 +100,9 @@ runs:
       run: yarn install --immutable --inline-builds
       env:
         # Overrides/align yarnrc.yml options (v3, v4) for a CI context
-        YARN_ENABLE_GLOBAL_CACHE: 'false' # Use local cache folder to keep downloaded archives
-        YARN_NM_MODE: 'hardlinks-local' # Reduce node_modules size
+        YARN_ENABLE_GLOBAL_CACHE: 'false'  # Use local cache folder to keep downloaded archives
+        YARN_ENABLE_MIRROR: 'false'        # Prevent populating global cache for caches misses (local cache only)
+        YARN_NM_MODE: 'hardlinks-local'    # Reduce node_modules size
         YARN_INSTALL_STATE_PATH: '.yarn/ci-cache/install-state.gz' # Might speed up resolution step when node_modules present
         # Other environment variables
         HUSKY: '0' # By default do not run HUSKY install
-

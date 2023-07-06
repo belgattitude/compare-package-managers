@@ -1,0 +1,70 @@
+# Bench yarn with compression vs without + action/cache
+name: 'Yarn enable mirror comparison'
+on: [push]
+
+env:
+  PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'true'
+  HUSKY: '0'
+
+jobs:
+  install-bench:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # not needed outside benchmarks
+      - name: ⚙ To ease benchmarks and detection of YARN_RC_FILENAME
+        run: corepack enable
+
+
+      - name: 📥 PRE-WARM (some native binaries might have been cached)
+        run: yarn install --immutable --inline-builds
+        env:
+          YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_ENABLE_MIRROR: 'false'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp-warmup'
+          YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress-warmup.gz
+
+
+      - name: 🧹 Cleanup workspace
+        run: | 
+          npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+          yarn cache clean --all
+          npm cache clean --force
+
+      - name: 📥 Yarn install no-cache (no-compress) - NO MIRROR
+        run: yarn install --immutable --inline-builds
+        env:
+          YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_ENABLE_MIRROR: 'false'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp'
+          YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress.gz
+
+      - name: 🧹 cleanup space
+        run: |
+          npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+          yarn cache clean --all
+          npm cache clean --force
+
+      - name: 📥 Yarn install no-cache (no-compress) - WITH MIRROR
+        run: yarn install --immutable --inline-builds
+        env:
+          YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_ENABLE_MIRROR: 'true'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp-mirror'
+          YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress-mirror.gz
+
+

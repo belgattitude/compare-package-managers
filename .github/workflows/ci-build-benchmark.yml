@@ -22,6 +22,7 @@ jobs:
       - name: 📥 YARN Monorepo install
         uses: ./.github/actions/yarn-nm-install
         with:
+          enable-corepack: true
           cache-prefix: 'build-bench'
 
       - name: YARN Nextjs build
@@ -64,6 +65,7 @@ jobs:
       - name: 📥 YARN Monorepo install
         uses: ./.github/actions/yarn-nm-install
         with:
+          enable-corepack: true
           cache-prefix: 'build-bench'
 
       - name: YARN Typecheck

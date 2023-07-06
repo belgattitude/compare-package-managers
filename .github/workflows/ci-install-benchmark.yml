@@ -71,7 +71,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-benchmark-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-
 
-      - name: 📥 Yarn install dependencies (mixed-compress)
+      - name: 📥 ♻️ Yarn install [CACHE ON | MIXED COMPRESSION]
         run: yarn install --immutable --inline-builds
         env:
           YARN_RC_FILENAME: .yarnrc.mixed-compress.yml
@@ -86,7 +86,7 @@ jobs:
           yarn cache clean --mirror
           npm cache clean --force
 
-      - name: 📥 Yarn install dependencies (no-compress)
+      - name: 📥 ♻️ Yarn install [CACHE ON | NO COMPRESS]
         run: yarn install --immutable --inline-builds
         env:
           YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
@@ -101,7 +101,7 @@ jobs:
           yarn cache clean --mirror
           npm cache clean --force
 
-      - name: 📥 Yarn install cache (mixed-compress)
+      - name: 📥 Yarn install [CACHE OFF | MIXED COMPRESSION]
         run: yarn install --immutable --inline-builds
         env:
           YARN_RC_FILENAME: '.yarnrc.mixed-compress.yml'
@@ -116,7 +116,7 @@ jobs:
           yarn cache clean --mirror
           npm cache clean --force
 
-      - name: 📥 Yarn install no-cache (no-compress)
+      - name: 📥 Yarn install [CACHE OFF | NO COMPRESSION]
         run: yarn install --immutable --inline-builds
         env:
           YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
@@ -131,7 +131,7 @@ jobs:
           yarn cache clean --mirror
           npm cache clean --force
 
-      - name: 📥 PNPM install
+      - name: 📥 ♻️ PNPM install [CACHE ON]
         shell: bash
         run: pnpm install --frozen-lockfile --prefer-offline
 
@@ -141,7 +141,7 @@ jobs:
           yarn cache clean --mirror
           npm cache clean --force
 
-      - name: 📥 PNPM install no-cache
+      - name: 📥 PNPM install [CACHE OFF]
         shell: bash
         run: pnpm install --store-dir ./node_modules/.pnpm-global-store --frozen-lockfile --prefer-offline
 
@@ -161,7 +161,7 @@ jobs:
           restore-keys: |
             yarn-pnp-benchmark-cache-no-compress
 
-      - name: 📥 Yarn install P'n'P
+      - name: 📥 Yarn install P'n'P [CACHE ON | NO COMPRESS]
         run: yarn install --immutable --inline-builds
         continue-on-error: true
         env:

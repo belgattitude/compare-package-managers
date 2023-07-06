@@ -83,7 +83,7 @@ jobs:
       - name: 🧹 Cleanup workspace
         run: |
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-          yarn cache clean --all
+          yarn cache clean --mirror
           npm cache clean --force
 
       - name: 📥 Yarn install dependencies (no-compress)
@@ -98,7 +98,7 @@ jobs:
       - name: 🧹 Cleanup workspace
         run: |
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-          yarn cache clean --all
+          yarn cache clean --mirror
           npm cache clean --force
 
       - name: 📥 Yarn install cache (mixed-compress)
@@ -113,7 +113,7 @@ jobs:
       - name: 🧹 Cleanup workspace
         run: |
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-          yarn cache clean --all
+          yarn cache clean --mirror
           npm cache clean --force
 
       - name: 📥 Yarn install no-cache (no-compress)
@@ -128,7 +128,7 @@ jobs:
       - name: 🧹 Cleanup workspace
         run: |
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-          yarn cache clean --all
+          yarn cache clean --mirror
           npm cache clean --force
 
       - name: 📥 PNPM install
@@ -138,7 +138,7 @@ jobs:
       - name: 🧹 Cleanup workspace
         run: |
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-          yarn cache clean --all
+          yarn cache clean --mirror
           npm cache clean --force
 
       - name: 📥 PNPM install no-cache
@@ -149,7 +149,7 @@ jobs:
       - name: 🧹 Cleanup workspace
         run: |
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
-          yarn cache clean --all
+          yarn cache clean --mirror
           npm cache clean --force
 
       - name: ♻ Setup yarn pnp cache (no-compress)

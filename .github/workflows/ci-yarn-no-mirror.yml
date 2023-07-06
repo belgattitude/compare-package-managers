@@ -1,5 +1,5 @@
 # Bench yarn with compression vs without + action/cache
-name: 'Install benchmarks'
+name: 'Yarn enable mirror comparison'
 on: [push]
 
 env:
@@ -37,7 +37,7 @@ jobs:
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress-warmup.gz
 
 
-      - name: 🧹 cleanup space
+      - name: 🧹 Cleanup workspace
         run: | 
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --all

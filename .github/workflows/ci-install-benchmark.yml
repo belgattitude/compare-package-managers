@@ -107,7 +107,7 @@ jobs:
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
 
-      - name: 📥 Yarn install no-cache (no-compress)
+      - name: 📥 Yarn install no-cache (no-compress) - NO MIRROR
         run: yarn install --immutable --inline-builds
         env:
           YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
@@ -115,6 +115,16 @@ jobs:
           YARN_ENABLE_MIRROR: 'false'
           YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress.gz
+
+      - name: 📥 Yarn install no-cache (no-compress) - WITH MIRROR
+        run: yarn install --immutable --inline-builds
+        env:
+          YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
+          YARN_ENABLE_GLOBAL_CACHE: 'false'
+          YARN_ENABLE_MIRROR: 'true'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-cache-no-comp-mirror'
+          YARN_INSTALL_STATE_PATH: .yarn/install-state-no-cache-no-compress-mirror.gz
+
 
       - name: 🧹 Remove node_modules
         run: npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"

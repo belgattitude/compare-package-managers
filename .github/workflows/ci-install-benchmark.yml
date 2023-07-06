@@ -31,18 +31,18 @@ jobs:
         id: yarn-benchmark-cache-no-compress
         with:
           path: ./.yarn/benchmark-cache/no-compress
-          key: yarn-benchmark-cache-no-compress-${{ hashFiles('yarn.no-compress.lock') }}
+          key: yarn-benchmark-cache-no-compress-v2-${{ hashFiles('yarn.no-compress.lock') }}
           restore-keys: |
-            yarn-benchmark-cache-no-compress
+            yarn-benchmark-cache-no-compress-v2-
 
       - name: ♻ Setup yarn cache (mixed-compress)
         uses: actions/cache@v3
         id: yarn-benchmark-cache-mixed-compress
         with:
           path: ./.yarn/benchmark-cache/mixed-compress
-          key: yarn-benchmark-cache-mixed-compress-${{ hashFiles('yarn.mixed-compress.lock') }}
+          key: yarn-benchmark-cache-mixed-compress-v2-${{ hashFiles('yarn.mixed-compress.lock') }}
           restore-keys: |
-            yarn-benchmark-cache-mixed-compress
+            yarn-benchmark-cache-mixed-compress-v2-
 
       # PNPM does not rotate the cache (store) like Yarn. When the lock change new packages will
       # be added, older won't be removed and so the action/cache storage will grow over time.
@@ -92,7 +92,7 @@ jobs:
           YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
           YARN_ENABLE_GLOBAL_CACHE: 'false'
           YARN_ENABLE_MIRROR: 'false'
-          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/pnp-no-compress'
+          YARN_CACHE_FOLDER: '.yarn/benchmark-cache/no-compress'
           YARN_INSTALL_STATE_PATH: .yarn/install-state-no-compress.gz
 
       - name: 🧹 Cleanup workspace

@@ -85,6 +85,7 @@ jobs:
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --mirror
           npm cache clean --force
+          ls -la .yarn/benchmark-cache/no-compress
 
       - name: 📥 ♻️ Yarn install [CACHE ON | NO COMPRESS]
         run: yarn install --immutable --inline-builds
@@ -97,9 +98,11 @@ jobs:
 
       - name: 🧹 Cleanup workspace
         run: |
+          ls -la .yarn/benchmark-cache/no-compress
           npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --mirror
           npm cache clean --force
+          ls -la .yarn/benchmark-cache/no-compress
 
       - name: 📥 Yarn install [CACHE OFF | MIXED COMPRESSION]
         run: yarn install --immutable --inline-builds

@@ -1,6 +1,6 @@
 # Bench yarn with compression vs without + action/cache
 name: 'Yarn enable mirror comparison'
-on: [push]
+on: [push, workflow_dispatch]
 
 env:
   PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -39,7 +39,7 @@ jobs:
 
       - name: 🧹 Cleanup workspace
         run: | 
-          npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --all
           npm cache clean --force
 
@@ -54,7 +54,7 @@ jobs:
 
       - name: 🧹 cleanup space
         run: |
-          npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --all
           npm cache clean --force
 

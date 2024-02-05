@@ -1,5 +1,5 @@
 name: 'Build benchmarks'
-on: [push]
+on: [push, workflow_dispatch]
 env:
   YARN_RC_FILENAME: '.yarnrc.no-compress.yml'
   PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -34,7 +34,7 @@ jobs:
         run: yarn check-size
 
       - name: 🧹 Reset install and builds
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" "**/.next" "**/.cache"
+        run: npx -y rimraf@5.0.5 --glob "**/node_modules" "**/.next" "**/.cache"
 
       - name: 📥 PNPM Monorepo install
         uses: ./.github/actions/pnpm-install
@@ -55,10 +55,10 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -73,7 +73,7 @@ jobs:
         run: yarn typecheck
 
       - name: 🧹 Reset install and builds
-        run: npx -y rimraf@5.0.1 --glob "**/node_modules" "**/.next" "**/.cache"
+        run: npx -y rimraf@5.0.5 --glob "**/node_modules" "**/.next" "**/.cache"
 
       - name: 📥 PNPM Monorepo install
         uses: ./.github/actions/pnpm-install

@@ -82,8 +82,7 @@ jobs:
 
       - name: 🧹 Cleanup workspace
         run: |
-          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz" ".yarn/benchmark-cache/mixed-compress"
-          yarn cache clean
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --mirror
           npm cache clean --force
           ls -la .yarn/benchmark-cache
@@ -100,8 +99,7 @@ jobs:
       - name: 🧹 Cleanup workspace
         run: |
           ls -la .yarn/benchmark-cache
-          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz" ".yarn/benchmark-cache/no-compress"
-          yarn cache clean
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --mirror
           npm cache clean --force
           ls -la .yarn/benchmark-cache
@@ -117,8 +115,7 @@ jobs:
 
       - name: 🧹 Cleanup workspace
         run: |
-          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz" ".yarn/benchmark-cache/no-compress"
-          yarn cache clean
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --mirror
           npm cache clean --force
 
@@ -133,8 +130,7 @@ jobs:
 
       - name: 🧹 Cleanup workspace
         run: |
-          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz" ".yarn/benchmark-cache/no-cache-no-comp"
-          yarn cache clean
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --mirror
           npm cache clean --force
 

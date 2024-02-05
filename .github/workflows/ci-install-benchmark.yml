@@ -1,6 +1,6 @@
 # Bench yarn with compression vs without + action/cache
 name: 'Install benchmarks'
-on: [push]
+on: [push, workflow_dispatch]
 
 env:
   PRISMA_SKIP_POSTINSTALL_GENERATE: 'true'
@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -27,7 +27,7 @@ jobs:
         run: corepack enable
 
       - name: ♻ Setup yarn cache (no-compress)
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: yarn-benchmark-cache-no-compress
         with:
           path: ./.yarn/benchmark-cache/no-compress
@@ -36,7 +36,7 @@ jobs:
             yarn-benchmark-cache-no-compress-v2-
 
       - name: ♻ Setup yarn cache (mixed-compress)
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: yarn-benchmark-cache-mixed-compress
         with:
           path: ./.yarn/benchmark-cache/mixed-compress
@@ -63,7 +63,7 @@ jobs:
       # PNPM store seems OS / Architecture dependent while Yarn cache isn't. If the action runs on Win/Mac/Linux
       # you'll have 3 caches
       - name: ♻ Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: pnpm-benchmark-store-cache
         with:
           path: ${{ steps.pnpm-config.outputs.PNPM_STORE_PATH }}
@@ -156,7 +156,7 @@ jobs:
           npm cache clean --force
 
       - name: ♻ Setup yarn pnp cache (no-compress)
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: yarn-pnp-benchmark-cache-no-compress
         with:
           path: ./.yarn/benchmark-cache/pnp-no-compress

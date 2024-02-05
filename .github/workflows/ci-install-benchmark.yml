@@ -99,7 +99,7 @@ jobs:
 
       - name: 🧹 Cleanup workspace
         run: |
-          ls -la .yarn/benchmark-cache/no-compress
+          ls -la .yarn/benchmark-cache
           npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz" ".yarn/benchmark-cache/no-compress"
           yarn cache clean
           yarn cache clean --mirror

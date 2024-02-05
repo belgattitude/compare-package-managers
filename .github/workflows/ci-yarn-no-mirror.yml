@@ -39,7 +39,7 @@ jobs:
 
       - name: 🧹 Cleanup workspace
         run: | 
-          npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --all
           npm cache clean --force
 
@@ -54,7 +54,7 @@ jobs:
 
       - name: 🧹 cleanup space
         run: |
-          npx -y rimraf@5.0.1 --glob "**/node_modules" ".yarn/install-state*.gz"
+          npx -y rimraf@5.0.5 --glob "**/node_modules" ".yarn/install-state*.gz"
           yarn cache clean --all
           npm cache clean --force
 
